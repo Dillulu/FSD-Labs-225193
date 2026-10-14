@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question 1 - Interactive Product Configurator (jQuery)</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@1,600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Top Header -->
+    <header class="app-header">
+        <div class="header-container">
+            <div class="brand">
+                <span class="brand-badge">Lab 05 • Task 1</span>
+                <h1>Interactive Product Configurator</h1>
+            </div>
+            <div class="student-pill">
+                <span class="student-name">Hamza Tahir</span>
+                <span class="student-id">Reg ID: 225193</span>
+                <span class="campus-tag">Air University</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Workspace -->
+    <main class="main-container">
+        <!-- Notification Banner -->
+        <div id="status-alert" class="alert-box alert-info hidden">
+            <span class="alert-icon">✨</span>
+            <span id="alert-text">Welcome to the jQuery Interactive Configurator.</span>
+            <button type="button" class="alert-close" id="btn-close-alert">&times;</button>
+        </div>
+
+        <div class="configurator-grid">
+            <!-- Left Column: Controls & Options -->
+            <section class="panel controls-panel">
+                <div class="panel-header">
+                    <h2>Customization Studio</h2>
+                    <span class="badge" id="mode-badge">Standard Mode</span>
+                </div>
+
+                <form id="configurator-form">
+                    <!-- Base Product Selection -->
+                    <div class="form-section">
+                        <label class="section-label">1. Choose Color Finish</label>
+                        <div class="color-palette" id="color-palette">
+                            <button type="button" class="color-swatch active" data-color="midnight" data-hex="#0f172a" title="Midnight Slate">
+                                <span class="swatch-circle" style="background: #0f172a;"></span>
+                                <span class="swatch-name">Midnight</span>
+                            </button>
+                            <button type="button" class="color-swatch" data-color="pearl" data-hex="#f8fafc" title="Pearl White">
+                                <span class="swatch-circle" style="background: #f8fafc; border: 1px solid #cbd5e1;"></span>
+                                <span class="swatch-name">Pearl</span>
+                            </button>
+                            <button type="button" class="color-swatch" data-color="ocean" data-hex="#0284c7" title="Ocean Blue">
+                                <span class="swatch-circle" style="background: #0284c7;"></span>
+                                <span class="swatch-name">Ocean</span>
+                            </button>
+                            <button type="button" class="color-swatch" data-color="emerald" data-hex="#059669" title="Emerald Green">
+                                <span class="swatch-circle" style="background: #059669;"></span>
+                                <span class="swatch-name">Emerald</span>
+                            </button>
+                            <!-- Premium Locked Swatch -->
+                            <button type="button" class="color-swatch locked" data-color="gold" data-hex="#eab308" id="gold-swatch" title="Requires Premium Access">
+                                <span class="swatch-circle" style="background: linear-gradient(135deg, #facc15, #ca8a04);"></span>
+                                <span class="swatch-name">Gold ✨</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Size & Capacity -->
+                    <div class="form-section">
+                        <label class="section-label">2. Select Capacity</label>
+                        <div class="size-group">
+                            <label class="size-card active">
+                                <input type="radio" name="product-size" value="12" data-price="79.99" checked>
+                                <span class="size-title">12 oz</span>
+                                <span class="size-sub">Compact ($79.99)</span>
+                            </label>
+                            <label class="size-card">
+                                <input type="radio" name="product-size" value="16" data-price="89.99">
+                                <span class="size-title">16 oz</span>
+                                <span class="size-sub">Regular ($89.99)</span>
+                            </label>
+                            <label class="size-card">
+                                <input type="radio" name="product-size" value="20" data-price="99.99">
+                                <span class="size-title">20 oz</span>
+                                <span class="size-sub">Grand ($99.99)</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Custom Engraving with Real-time Event Handling -->
+                    <div class="form-section">
+                        <div class="label-with-meta">
+                            <label for="engraving-text" class="section-label">3. Laser Engraving</label>
+                            <span class="char-counter" id="engraving-counter">0 / 18 chars</span>
+                        </div>
+                        <input type="text" id="engraving-text" class="text-input" placeholder="Type custom text (e.g. Hamza Tahir)" maxlength="18" autocomplete="off">
+                        
+                        <div class="font-selector">
+                            <label class="sub-label">Engraving Font Style:</label>
+                            <div class="font-options">
+                                <button type="button" class="font-btn active" data-font="modern">Modern Sans</button>
+                                <button type="button" class="font-btn" data-font="serif">Classic Serif</button>
+                                <button type="button" class="font-btn" data-font="mono">Monospace</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Premium Customization Features (Simulated Purchase Unlock) -->
+                    <div class="form-section premium-card" id="premium-card">
+                        <div class="premium-header">
+                            <div class="premium-info">
+                                <span class="gold-star">⭐</span>
+                                <div>
+                                    <strong>Premium Customization Pack</strong>
+                                    <p>Unlock Glowing LED Base, Metallic Gold Coating & VIP Laser Badge</p>
+                                </div>
+                            </div>
+                            <span class="premium-price">+$19.99</span>
+                        </div>
+                        <div id="premium-locked-view">
+                            <button type="button" id="btn-unlock-premium" class="btn btn-premium">
+                                <span>⚡</span> Complete Simulated Premium Purchase
+                            </button>
+                        </div>
+                        <div id="premium-unlocked-view" class="hidden">
+                            <div class="premium-features-active">
+                                <div class="toggle-row">
+                                    <label for="toggle-led-glow">Ambient LED Rim Glow</label>
+                                    <input type="checkbox" id="toggle-led-glow" class="custom-toggle">
+                                </div>
+                                <div class="toggle-row">
+                                    <label for="toggle-vip-crest">Custom VIP Laser Crest</label>
+                                    <input type="checkbox" id="toggle-vip-crest" class="custom-toggle">
+                                </div>
+                                <span class="unlocked-badge">✓ Premium Perks Activated</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="form-actions">
+                        <button type="submit" id="btn-save-config" class="btn btn-primary">Save Configuration</button>
+                        <button type="button" id="btn-reset-config" class="btn btn-secondary">Reset to Default</button>
+                        <button type="button" id="btn-toggle-video" class="btn btn-outline">Watch Promo Teaser</button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Right Column: Live Interactive Product Canvas & Summary -->
+            <section class="panel preview-panel">
+                <div class="panel-header">
+                    <h2>Live Visual Preview</h2>
+                    <span class="price-display" id="total-price-display">$79.99</span>
+                </div>
+
+                <!-- Product Preview Stage -->
+                <div class="preview-stage" id="preview-stage">
+                    <div class="stage-backdrop"></div>
+                    
+                    <!-- The Product Object (Smart Mug / Thermos) -->
+                    <div class="product-assembly size-12 theme-midnight" id="product-model">
+                        <div class="mug-top-rim" id="mug-rim"></div>
+                        <div class="mug-lid"></div>
+                        <div class="mug-cylinder" id="mug-body">
+                            <div class="mug-sheen"></div>
+                            
+                            <!-- Dynamic Engraving Text Projected on Mug -->
+                            <div class="engraving-projection" id="engraving-display">
+                                <span id="engraved-label">YOUR NAME</span>
+                            </div>
+
+                            <!-- Optional VIP Crest -->
+                            <div class="vip-crest-projection hidden" id="vip-crest">
+                                🛡️ VERIFIED EDITION
+                            </div>
+
+                            <!-- Temperature Indicator Glow -->
+                            <div class="led-glow-ring hidden" id="led-ring"></div>
+                        </div>
+                        <div class="mug-handle"></div>
+                        <div class="mug-base-shadow"></div>
+                    </div>
+
+                    <!-- Stage Controls / Visual Indicators -->
+                    <div class="stage-overlay-tags">
+                        <span class="spec-tag" id="tag-color">Color: Midnight Slate</span>
+                        <span class="spec-tag" id="tag-size">Capacity: 12 oz</span>
+                        <span class="spec-tag" id="tag-font">Font: Modern Sans</span>
+                    </div>
+                </div>
+
+                <!-- Video / Promotional Content Modal or Accordion -->
+                <div class="promo-video-container hidden" id="promo-video-box">
+                    <div class="promo-header">
+                        <h3>Product Showcase & Engineering Film</h3>
+                        <button type="button" id="btn-close-video" class="close-video">&times;</button>
+                    </div>
+                    <div class="video-mockup">
+                        <div class="video-screen">
+                            <div class="play-indicator">▶</div>
+                            <p class="video-title">Precision Thermal Engineering 2026</p>
+                            <p class="video-sub">Featuring Smart Ceramic Coating & Laser Engraved Finish</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Real-time Specs Card -->
+                <div class="specs-summary-card">
+                    <h3>Current Selected Configuration</h3>
+                    <div class="summary-details">
+                        <div class="summary-row">
+                            <span class="s-label">Product Name:</span>
+                            <span class="s-val" id="sum-name">Smart Thermal Tumbler Pro</span>
+                        </div>
+                        <div class="summary-row">
+                            <span class="s-label">Color Finish:</span>
+                            <span class="s-val" id="sum-color">Midnight Slate</span>
+                        </div>
+                        <div class="summary-row">
+                            <span class="s-label">Capacity:</span>
+                            <span class="s-val" id="sum-size">12 oz Compact</span>
+                        </div>
+                        <div class="summary-row">
+                            <span class="s-label">Custom Engraving:</span>
+                            <span class="s-val" id="sum-engraving">(None)</span>
+                        </div>
+                        <div class="summary-row">
+                            <span class="s-label">Premium Upgrades:</span>
+                            <span class="s-val" id="sum-premium">Standard Edition</span>
+                        </div>
+                        <div class="summary-row highlight">
+                            <span class="s-label">Total Estimated Price:</span>
+                            <span class="s-val font-bold" id="sum-price">$79.99</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Saved Configurations List -->
+                <div class="saved-configs-box">
+                    <h3>Saved Configurations (<span id="saved-count">0</span>)</h3>
+                    <div class="saved-list" id="saved-list">
+                        <p class="empty-state">No configurations saved yet. Click "Save Configuration" to record one.</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- jQuery 3.7.1 Loaded before script.js -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

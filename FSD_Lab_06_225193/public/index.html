@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>My Portfolio | Lab 06</title><link rel="stylesheet" href="style.css"></head>
+<body>
+<header><a href="#" class="brand">My Portfolio<span>LAB 06</span></a><button id="edit-profile">Edit profile</button></header>
+<main>
+<p id="message" role="status" aria-live="polite"></p>
+<section class="hero"><div id="avatar">MT</div><div><p class="eyebrow">PERSONAL PORTFOLIO</p><h1 id="name">Make this space yours.</h1><h2 id="role">Your profile, your work.</h2><p id="bio">Start by adding your profile. Then add your skills, education, experience and projects below.</p><a id="email"></a></div></section>
+<section id="profile-editor" class="editor" hidden><h2>Your profile</h2><form id="profile-form"><div class="form-grid"><label>Full name<input name="name" maxlength="100" required></label><label>Professional title<input name="title" maxlength="100" required></label><label>Email<input name="email" type="email" maxlength="150" required></label></div><label>About you<textarea name="bio" maxlength="2000" required></textarea></label><button>Save profile</button><button type="button" class="secondary" id="close-profile">Close</button><button type="button" class="danger" id="delete-profile">Delete profile</button></form><form id="photo-form"><label>Profile photo (JPG / PNG, max 2 MB)<input type="file" name="image" accept="image/jpeg,image/png" required></label><button>Upload / update photo</button><button type="button" class="secondary" id="remove-photo">Remove photo</button></form></section>
+<section class="editor" id="entry-editor" hidden><h2 id="entry-heading">Add entry</h2><form id="entry-form"><input type="hidden" name="id"><label>Section<select name="category"><option value="skills">Skills</option><option value="education">Education</option><option value="experience">Experience</option><option value="projects">Projects</option></select></label><label>Title<input name="title" maxlength="120" required></label><label>Details<textarea name="detail" maxlength="2000" required></textarea></label><button>Save entry</button><button type="button" class="secondary" id="cancel-entry">Cancel</button></form></section>
+<div id="sections"></div>
+</main><footer>Muhammad Hamza Tahir · 225193 · Full Stack Development</footer>
+<script src="vendor/jquery.min.js"></script><script src="app.js"></script>
+</body></html>

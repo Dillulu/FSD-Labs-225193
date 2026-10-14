@@ -1,0 +1,20 @@
+HOW TO RECORD YOUR OWN DEMO (WINDOWS)
+1. Start MySQL, run npm start, then open http://localhost:3000.
+2. Click in the browser. Press Windows + G to open Xbox Game Bar.
+3. Press Windows + Alt + R to start recording the browser window.
+   If Game Bar is unavailable, use Snipping Tool > Record > New, select the
+   browser area and press Start (on supported Windows 11 versions).
+4. Add your name, title, email and bio. Save the profile.
+5. Upload a JPG/PNG photo; show that it appears in the profile.
+6. Add one skill, education entry, experience entry and project.
+7. Edit a project, save it, then delete a temporary entry.
+8. Update the profile photo and remove it to demonstrate both features.
+9. Refresh the page. Show that your information is still there.
+10. Stop Node with Ctrl+C, run npm start again, then refresh the browser.
+    Show that the information remains available.
+11. Press Windows + Alt + R to stop. Find the video in Videos > Captures.
+    With Snipping Tool, save the recording manually as an MP4.
+12. Rename it Hamza_225193_Lab06_Demo.mp4. Keep the demo about 2-3 minutes.
+
+The included demo is an actual browser recording using example content.
+You can submit your own recording after replacing the examples with your details.

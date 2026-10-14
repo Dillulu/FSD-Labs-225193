@@ -1,0 +1,16 @@
+CREATE DATABASE IF NOT EXISTS lab06_portfolio;
+USE lab06_portfolio;
+CREATE TABLE IF NOT EXISTS profile (
+ id INT PRIMARY KEY,
+ name VARCHAR(100) NOT NULL,
+ title VARCHAR(100) NOT NULL,
+ email VARCHAR(150) NOT NULL,
+ bio TEXT NOT NULL,
+ image VARCHAR(200) DEFAULT NULL
+);
+CREATE TABLE IF NOT EXISTS entries (
+ id INT AUTO_INCREMENT PRIMARY KEY,
+ category ENUM('skills','education','experience','projects') NOT NULL,
+ title VARCHAR(120) NOT NULL,
+ detail TEXT NOT NULL
+);

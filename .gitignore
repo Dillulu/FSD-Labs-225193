@@ -1,0 +1,17 @@
+# Local dependencies and configuration
+node_modules/
+.env
+.env.*
+!.env.example
+
+# Generated local files
+*.log
+.DS_Store
+Thumbs.db
+
+# Git metadata from nested projects
+**/.git/
+
+# Locally uploaded portfolio images
+FSD_Lab_06_225193/uploads/*
+!FSD_Lab_06_225193/uploads/.gitkeep

@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Custom Ceramic Mug – Interactive Product Configurator | Lab 04</title>
+  
+  <!-- External Lottie Player Library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
+  
+  <!-- External Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- =========================================================================
+       Header & Real-time Status Badge (Requirement 11)
+       ========================================================================= -->
+  <header>
+    <div class="brand-wrapper">
+      <svg class="brand-icon" viewBox="0 0 24 24" id="brandSvg">
+        <path d="M2,19H18A3,3 0 0,0 21,16V9A3,3 0 0,0 18,6H16V5A2,2 0 0,0 14,3H4A2,2 0 0,0 2,5V19M4,5H14V17H4V5M16,8H18A1,1 0 0,1 19,9V16A1,1 0 0,1 18,17H16V8Z"/>
+      </svg>
+      <div class="logo">Mug<span>Craft</span> Studio</div>
+    </div>
+    <div class="header-user-status">
+      <span class="status-badge free" id="statusBadge">Free User</span>
+    </div>
+  </header>
+
+  <!-- =========================================================================
+       Main Application Container
+       ========================================================================= -->
+  <main class="container">
+
+    <!-- Section 1: Hero Section with Product Info & Interactive 3D Preview -->
+    <section class="card hero">
+      <div class="hero-left">
+        <span class="eyebrow">Artisan Collection • Lab 04</span>
+        <h1>Custom Ceramic Coffee Mug</h1>
+        <p class="price">₨ 1,499 <span style="font-size:0.85rem; font-weight:normal; color:#8a7a7c;">(Incl. all taxes)</span></p>
+        
+        <!-- Copy/Cut Protected Product Description (Requirement 1) -->
+        <div class="description-box">
+          <p class="description" id="productDescription">
+            Crafted from high-density kiln-fired ceramic with an ergonomic comfort handle. 
+            Features our proprietary heat-retaining double wall, scratch-resistant gloss glaze, 
+            and precision laser engraving surface. Dishwasher and microwave safe.
+          </p>
+        </div>
+        
+        <div class="chips">
+          <span class="chip">100% Ceramic</span>
+          <span class="chip">Laser Engraving</span>
+          <span class="chip">350ml Default</span>
+          <span class="chip">Eco-friendly</span>
+        </div>
+        <p class="note">🔒 Description text is copy-protected (anti-theft policy).</p>
+
+        <!-- Product Drag-and-Drop Cart Zone (Requirement 4) -->
+        <div class="cart-section">
+          <h2>Shopping Cart & Order</h2>
+          <div class="drop-zone" id="dropZone">
+            <span class="drop-zone-icon">🛒</span>
+            <p><strong>Drag & Drop the customized mug here</strong> to add to cart</p>
+            <div id="cartItems" style="width:100%;"></div>
+          </div>
+          <p class="cart-message" id="cartMessage"></p>
+          <button class="btn place-order-btn" id="placeOrderBtn">Proceed to Checkout</button>
+          
+          <!-- Lottie Animation Success Container (Requirement 7) -->
+          <div id="successAnimationBox">
+            <div id="lottieContainer"></div>
+            <p style="color:#2e8b57; font-weight:800; font-size:1.05rem; margin-top:6px;">🎉 Order Placed Successfully!</p>
+            <p style="color:#6b5b5d; font-size:0.82rem;">Thank you! Your custom mug is in production.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Interactive 3D Product Preview Area (Requirement 3) -->
+      <div class="hero-right">
+        <div class="product-preview-container">
+          <div class="product-preview" id="productPreview" draggable="true" title="Drag me to the cart!">
+            <div class="mug-image-wrapper">
+              <img src="assets/mug.jpg" alt="Custom Ceramic Coffee Mug" class="mug-img" id="mugImage">
+              
+              <!-- Steam SVG animation (Requirement 14 & 6) -->
+              <svg class="steam-container" width="50" height="30" viewBox="0 0 50 30">
+                <path class="steam-path" d="M15,25 Q10,15 15,5 T15,-5" stroke="#ffffff" stroke-width="2.5" fill="none" opacity="0.7"/>
+                <path class="steam-path" d="M25,28 Q30,18 25,8 T25,-3" stroke="#ffffff" stroke-width="2.5" fill="none" opacity="0.6" style="animation-delay: 1.2s;"/>
+                <path class="steam-path" d="M35,26 Q30,16 35,6 T35,-4" stroke="#ffffff" stroke-width="2.5" fill="none" opacity="0.7" style="animation-delay: 2.1s;"/>
+              </svg>
+            </div>
+
+            <!-- Dynamic Live Custom Engraving Preview (Requirement 2) -->
+            <div class="back-text">
+              <div id="engravingGraphic"></div>
+              <div id="engravingText"></div>
+              <div id="engravingSub"></div>
+            </div>
+
+            <div class="preview-overlay" id="previewOverlay"></div>
+          </div>
+        </div>
+        <p class="preview-hint"><span>🖱️</span> Hover for 3D perspective tilt • Drag into cart</p>
+      </div>
+    </section>
+
+    <!-- Section 2: Customization Controls (Free vs Premium) -->
+    <div class="row-2">
+      <!-- Standard Customization (Requirement 2) -->
+      <section class="card">
+        <span class="eyebrow">Standard Controls</span>
+        <h2>Base Customization</h2>
+
+        <div class="control-group">
+          <label>Mug Color (Standard Free)</label>
+          <div class="color-options" id="colorOptions">
+            <button type="button" class="color-btn active" data-filter="none" style="background:#1a1a1a" title="Charcoal Black"></button>
+            <button type="button" class="color-btn" data-filter="brightness(1.6) contrast(0.95)" style="background:#f4f4f4" title="Milk White"></button>
+            <button type="button" class="color-btn" data-filter="sepia(0.6) hue-rotate(300deg) saturate(3)" style="background:#b82638" title="Ruby Crimson"></button>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <label for="variantSelect">Mug Size Variant</label>
+          <select id="variantSelect">
+            <option value="Small">Small (250ml) — Compact Espresso & Tea</option>
+            <option value="Medium" selected>Medium (350ml) — Standard Daily Mug</option>
+            <option value="Large">Large (450ml) — Grande Coffee Mug</option>
+          </select>
+        </div>
+
+        <div class="control-group">
+          <label for="engravingInput">
+            Custom Engraved Text
+            <span id="charCount">0/18</span>
+          </label>
+          <input type="text" id="engravingInput" maxlength="18" placeholder="Type your name or quote...">
+          <small style="color:#8a7a7c; font-size:0.76rem; display:block; margin-top:4px;">Appears in real-time on mug preview (Max 18 chars).</small>
+        </div>
+      </section>
+
+      <!-- Premium Customization & Locks (Requirement 8, 9) -->
+      <section class="card premium-section">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+          <div>
+            <span class="eyebrow">Exclusive Access</span>
+            <h2 style="margin-bottom:0;">Premium Options <span id="lockIcon">🔒</span></h2>
+          </div>
+          <span class="premium-header-badge">VIP ONLY</span>
+        </div>
+
+        <div class="premium-locked-banner" id="premiumLockedBanner">
+          <span>🔒 Premium features are locked for Free Users</span>
+          <span style="font-size:0.75rem;">₨ 499 One-time</span>
+        </div>
+
+        <div id="premiumControls" class="locked">
+          <div class="control-group">
+            <label>Exclusive Ceramic Colors</label>
+            <div class="color-options">
+              <button type="button" class="color-btn premium-btn" data-filter="hue-rotate(190deg) saturate(2)" style="background:#153b6b" disabled title="Deep Navy"></button>
+              <button type="button" class="color-btn premium-btn" data-filter="hue-rotate(90deg) saturate(1.8)" style="background:#1f5933" disabled title="Emerald Forest"></button>
+              <button type="button" class="color-btn premium-btn" data-filter="hue-rotate(30deg) saturate(2.2)" style="background:#6d3c1c" disabled title="Warm Mocha"></button>
+              <button type="button" class="color-btn premium-btn" data-filter="hue-rotate(265deg) saturate(2.4)" style="background:#542577" disabled title="Royal Violet"></button>
+            </div>
+          </div>
+
+          <div class="control-group">
+            <label for="premiumGraphic">Decorative Graphic Stamp</label>
+            <select id="premiumGraphic" disabled>
+              <option value="none">None (Text Only)</option>
+              <option value="heart">Sweet Heart (❤️)</option>
+              <option value="star">Shining Star (★)</option>
+              <option value="coffee">Coffee Cup (☕)</option>
+              <option value="crown">Royal Crown (👑)</option>
+              <option value="fire">Fire Blaze (🔥)</option>
+            </select>
+          </div>
+
+          <div class="control-group">
+            <label for="engravingStyle">Typography Font Style</label>
+            <select id="engravingStyle" disabled>
+              <option value="plain">Classic Sans-Serif</option>
+              <option value="script">Luxury Cursive Script</option>
+              <option value="bold">Heavy Bold Impact</option>
+            </select>
+          </div>
+        </div>
+
+        <button class="btn upgrade-btn" id="upgradeBtn">⚡ Upgrade to Premium (₨ 499)</button>
+      </section>
+    </div>
+
+    <!-- Section 3: Bonus Interactive SVG Graphics (Requirement 14) -->
+    <section class="card">
+      <span class="eyebrow">Bonus Feature • Requirement 14</span>
+      <h2>Interactive SVG Graphics Showcase</h2>
+      <div class="svg-showcase">
+        <div class="svg-feature-card">
+          <!-- Interactive Vector Mug SVG that syncs with current color -->
+          <svg class="interactive-svg-icon" viewBox="0 0 64 64" id="interactiveMugSvg">
+            <path id="svgMugFill" d="M12,16 L44,16 L42,52 A6,6 0 0,1 36,58 L20,58 A6,6 0 0,1 14,52 Z" fill="#1a1a1a" stroke="#2b1f21" stroke-width="2"/>
+            <path d="M44,22 C52,22 54,36 44,40" fill="none" stroke="#2b1f21" stroke-width="4" stroke-linecap="round"/>
+            <ellipse cx="28" cy="16" rx="16" ry="3.5" fill="#e8d0b5"/>
+          </svg>
+          <div class="svg-feature-info">
+            <h3>Interactive Mug Vector</h3>
+            <p>Syncs dynamically with your chosen ceramic color glaze.</p>
+          </div>
+        </div>
+
+        <div class="svg-feature-card">
+          <!-- Interactive VIP Seal Badge SVG that turns gold on premium -->
+          <svg class="interactive-svg-icon" viewBox="0 0 64 64" id="interactiveBadgeSvg">
+            <circle id="svgBadgeShape" cx="32" cy="32" r="26" fill="#9c8388" stroke="#3d2c2e" stroke-width="2"/>
+            <polygon points="32,14 36,25 48,25 38,33 42,44 32,37 22,44 26,33 16,25 28,25" fill="#ffffff"/>
+          </svg>
+          <div class="svg-feature-info">
+            <h3>Premium Authenticity Seal</h3>
+            <p>Interactive gold badge unlocks and shines upon VIP upgrade.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 4: Video Advertisement (Requirement 5) -->
+    <section class="card">
+      <span class="eyebrow">Multimedia Promotion • Requirement 5</span>
+      <h2>Product Video Showcase</h2>
+      <div class="video-wrapper">
+        <video id="promoVideo" controls playsinline preload="metadata">
+          <source src="assets/mug.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    </section>
+
+    <!-- Section 5: Form Reset (Requirement 13) -->
+    <div class="reset-all-wrapper">
+      <button class="btn reset-all-btn" id="resetAllBtn">↺ Reset All Customizations to Initial State</button>
+    </div>
+
+  </main>
+
+  <!-- =========================================================================
+       Footer Section
+       ========================================================================= -->
+  <footer>
+    <p>Air University Islamabad — Kamra Campus | Department of Computer Science</p>
+    <p class="footer-author">Full Stack Development (CS-301L) — Lab 04 | Student: <strong>Hamza Tahir</strong> (Reg: <strong>225193</strong>)</p>
+  </footer>
+
+  <!-- =========================================================================
+       Notification Toast (Copy-protection feedback)
+       ========================================================================= -->
+  <div class="protection-toast" id="protectionToast"></div>
+
+  <!-- =========================================================================
+       Modal 1: Order Placement & Payment Details Modal
+       ========================================================================= -->
+  <div class="modal" id="orderModal">
+    <div class="modal-content">
+      <button class="close-modal" id="closeOrderModal">&times;</button>
+      <h2>Checkout & Order Details</h2>
+      <p style="margin:6px 0 14px; color:#554447;">Order Total: <strong style="color:var(--accent-dark); font-size:1.15rem;">₨ 1,499</strong></p>
+
+      <div class="payment-option">
+        <input type="radio" name="pay" id="cod" value="cod" checked>
+        <label for="cod">Cash on Delivery</label>
+        <input type="radio" name="pay" id="card" value="card">
+        <label for="card">Debit / Credit Card</label>
+      </div>
+
+      <div id="cardFormSection" style="display:none;">
+        <div class="form-group">
+          <label for="orderCardName">Cardholder Name</label>
+          <input type="text" id="orderCardName" placeholder="Hamza Tahir">
+          <small class="error"></small>
+        </div>
+        <div class="form-group">
+          <label for="orderCardNumber">Card Number</label>
+          <input type="text" id="orderCardNumber" maxlength="19" placeholder="4242 4242 4242 4242">
+          <small class="error"></small>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="orderExpiry">Expiry Date</label>
+            <input type="text" id="orderExpiry" maxlength="5" placeholder="12/28">
+            <small class="error"></small>
+          </div>
+          <div class="form-group">
+            <label for="orderCvv">CVV Code</label>
+            <input type="text" id="orderCvv" maxlength="4" placeholder="888">
+            <small class="error"></small>
+          </div>
+        </div>
+      </div>
+
+      <button class="btn pay-btn" id="confirmOrderBtn" style="margin-top:12px;">Confirm & Place Order</button>
+      <div class="processing" id="orderProcessing" hidden>
+        <div class="spinner"></div>
+        <span>Processing order details securely...</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       Modal 2: Premium Upgrade Payment Screen (Requirement 10, 11, 12)
+       ========================================================================= -->
+  <div class="modal" id="paymentModal">
+    <div class="modal-content">
+      <button class="close-modal" id="closeModal">&times;</button>
+      <h2>Upgrade to Premium Access</h2>
+      <p style="margin:4px 0 10px; color:#554447;">One-time Lifetime Upgrade: <strong style="color:var(--accent-dark); font-size:1.15rem;">₨ 499</strong></p>
+      
+      <ul style="margin-bottom:14px; padding-left:20px; color:#6b5b5d; font-size:0.86rem; line-height:1.6;">
+        <li>✨ 4 Exclusive artisan ceramic glazes (Navy, Emerald, Mocha, Violet)</li>
+        <li>✨ Custom graphic stamps (Hearts, Stars, Roast Coffee, Royal Crown)</li>
+        <li>✨ Elegant luxury cursive and heavy bold typography styles</li>
+        <li>✨ Priority artisan laser engraving queue</li>
+      </ul>
+
+      <form id="paymentForm" novalidate>
+        <div class="form-group">
+          <label for="cardName">Cardholder Name</label>
+          <input type="text" id="cardName" placeholder="Hamza Tahir" required>
+          <small class="error"></small>
+        </div>
+
+        <div class="form-group">
+          <label for="cardNumber">16-Digit Card Number</label>
+          <input type="text" id="cardNumber" maxlength="19" placeholder="5500 0000 0000 1234" required>
+          <small class="error"></small>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="expiry">Expiry (MM/YY)</label>
+            <input type="text" id="expiry" maxlength="5" placeholder="08/29" required>
+            <small class="error"></small>
+          </div>
+          <div class="form-group">
+            <label for="cvv">CVV (3 or 4 digits)</label>
+            <input type="text" id="cvv" maxlength="4" placeholder="786" required>
+            <small class="error"></small>
+          </div>
+        </div>
+
+        <button type="submit" class="btn pay-btn" style="margin-top:10px;">Pay ₨ 499 & Unlock VIP</button>
+        <button type="reset" class="btn reset-btn">Clear Payment Form</button>
+      </form>
+
+      <div class="processing" id="processingMsg" hidden>
+        <div class="spinner"></div>
+        <span>Simulating secure card transaction...</span>
+      </div>
+
+      <div class="success-msg" id="successMsg" hidden>
+        <p>✓ Payment Successful! Premium features unlocked.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- External Script -->
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question 3 - Student Management App (Express + jQuery)</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="app-header">
+        <div class="header-container">
+            <div class="brand">
+                <span class="brand-badge">Lab 05 • Task 3</span>
+                <h1>Student Management System</h1>
+            </div>
+            <div class="student-pill">
+                <span class="student-name">Hamza Tahir</span>
+                <span class="student-id">Reg ID: 225193</span>
+                <span class="campus-tag">Air University</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-container">
+        <!-- API Health & Endpoint Info Bar -->
+        <section class="info-bar">
+            <div class="endpoint-chips">
+                <div class="endpoint-chip get">
+                    <span class="method">GET</span>
+                    <code>http://localhost:3005/api/students</code>
+                </div>
+                <div class="endpoint-chip post">
+                    <span class="method">POST</span>
+                    <code>http://localhost:3005/api/students</code>
+                </div>
+            </div>
+            <div class="api-health">
+                <span class="health-dot" id="health-dot"></span>
+                <span id="health-text">Checking server...</span>
+                <button type="button" class="btn btn-sm btn-outline" id="btn-check-health">Refresh</button>
+            </div>
+        </section>
+
+        <!-- Status Bar -->
+        <div id="status-bar" class="status-bar idle">
+            <span class="status-icon" id="status-icon">ℹ️</span>
+            <span id="status-msg">Ready. Use the buttons below to interact with the Express API.</span>
+        </div>
+
+        <!-- Two Panel Layout -->
+        <div class="workspace">
+
+            <!-- LEFT: Students List (GET) -->
+            <section class="panel list-panel">
+                <div class="panel-header">
+                    <div>
+                        <h2>All Students</h2>
+                        <span class="subtitle" id="student-count-label">0 records</span>
+                    </div>
+                    <button type="button" class="btn btn-primary" id="btn-get-students">
+                        ⟳ Load Students (GET)
+                    </button>
+                </div>
+
+                <!-- Students Table -->
+                <div class="table-wrapper">
+                    <table id="students-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Reg ID</th>
+                                <th>City</th>
+                                <th>Age</th>
+                                <th>Grade</th>
+                                <th>Course</th>
+                            </tr>
+                        </thead>
+                        <tbody id="students-tbody">
+                            <tr class="empty-row">
+                                <td colspan="7">Click "Load Students (GET)" to fetch data from the Express API.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Raw JSON Inspector -->
+                <div class="json-section">
+                    <div class="json-header">
+                        <span>Raw JSON Response</span>
+                        <button type="button" class="btn-link" id="btn-toggle-json-get">Toggle</button>
+                    </div>
+                    <pre id="json-get-output" class="hidden json-display">Waiting for GET response...</pre>
+                </div>
+            </section>
+
+            <!-- RIGHT: Add Student Form (POST) -->
+            <section class="panel form-panel">
+                <div class="panel-header">
+                    <div>
+                        <h2>Add New Student</h2>
+                        <span class="subtitle">POST /api/students</span>
+                    </div>
+                    <span class="method-badge post-badge">POST</span>
+                </div>
+
+                <form id="add-student-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="f-name">Full Name <span class="req">*</span></label>
+                            <input type="text" id="f-name" class="input-field" placeholder="e.g. Ahmed Khan" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="f-regid">Registration ID</label>
+                            <input type="text" id="f-regid" class="input-field" placeholder="e.g. 225210">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="f-city">City <span class="req">*</span></label>
+                            <input type="text" id="f-city" class="input-field" placeholder="e.g. Lahore" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="f-age">Age <span class="req">*</span></label>
+                            <input type="number" id="f-age" class="input-field" placeholder="e.g. 20" min="16" max="35" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="f-grade">Grade</label>
+                            <select id="f-grade" class="input-field">
+                                <option value="A+">A+</option>
+                                <option value="A">A</option>
+                                <option value="B+">B+</option>
+                                <option value="B">B</option>
+                                <option value="C">C</option>
+                                <option value="N/A">N/A</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="f-course">Course</label>
+                            <input type="text" id="f-course" class="input-field" value="FSD" placeholder="e.g. FSD">
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" id="btn-submit-student" class="btn btn-success btn-full">
+                            ➕ Submit Student (POST Request)
+                        </button>
+                        <button type="button" id="btn-clear-form" class="btn btn-outline btn-full">
+                            Clear Form
+                        </button>
+                    </div>
+                </form>
+
+                <!-- POST Response Preview -->
+                <div class="response-box" id="post-response-box">
+                    <div class="response-header">
+                        <span>Server Response</span>
+                        <span class="status-code-tag" id="post-status-tag">Waiting...</span>
+                    </div>
+                    <pre id="json-post-output" class="json-display">Submit the form to see POST response from Express server.</pre>
+                </div>
+
+                <!-- CORS Explanation Card -->
+                <div class="concept-card">
+                    <h4>🔗 CORS in Action</h4>
+                    <p>This frontend runs on a different origin than the Express server on <code>localhost:3005</code>. The server uses the <strong>cors</strong> npm package to send <code>Access-Control-Allow-Origin: *</code> headers, allowing jQuery AJAX requests from the browser to work cross-origin.</p>
+                    <div class="concept-badges">
+                        <span class="cbadge">express</span>
+                        <span class="cbadge">cors middleware</span>
+                        <span class="cbadge">jQuery $.ajax</span>
+                        <span class="cbadge">JSON body parsing</span>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

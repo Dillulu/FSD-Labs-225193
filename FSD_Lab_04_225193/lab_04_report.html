@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>LAB TASK 4 - Hamza Tahir (225193)</title>
+  <style>
+    @page {
+      size: A4;
+      margin: 1.4cm 1.2cm 1.4cm 1.2cm;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
+      font-size: 11pt;
+      line-height: 1.5;
+      color: #24292e;
+      background: #ffffff;
+    }
+    
+    .page-break {
+      page-break-before: always;
+    }
+
+    .cover-card {
+      border: 2px solid #0f3d64;
+      border-radius: 8px;
+      padding: 24px 28px;
+      margin-bottom: 24px;
+      background: linear-gradient(to right, #fbfcfd, #f4f8fb);
+    }
+    .header-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 12px;
+    }
+    .header-table td {
+      vertical-align: middle;
+    }
+    .univ-logo {
+      width: 90px;
+      height: auto;
+    }
+    .univ-title {
+      text-align: center;
+      padding-left: 10px;
+    }
+    .univ-title h1 {
+      font-size: 17pt;
+      font-weight: 800;
+      color: #0b2e4c;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+    .univ-title h2 {
+      font-size: 12pt;
+      font-weight: 700;
+      color: #b84a68;
+      margin-top: 2px;
+    }
+    .meta-box {
+      margin-top: 14px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px 20px;
+      background: #ffffff;
+      border: 1px solid #d0dfea;
+      border-radius: 6px;
+      padding: 14px 18px;
+      font-size: 10.5pt;
+    }
+    .meta-item strong {
+      color: #0b2e4c;
+    }
+
+    .lab-title-banner {
+      background: #0b2e4c;
+      color: #ffffff;
+      text-align: center;
+      padding: 10px;
+      border-radius: 6px;
+      margin-top: 16px;
+    }
+    .lab-title-banner h2 {
+      font-size: 14pt;
+      letter-spacing: 0.5px;
+      font-weight: 800;
+    }
+    .lab-title-banner p {
+      font-size: 10pt;
+      opacity: 0.9;
+    }
+
+    /* Headings */
+    h2.section-header {
+      font-size: 13pt;
+      font-weight: 800;
+      color: #0b2e4c;
+      border-bottom: 2px solid #b84a68;
+      padding-bottom: 4px;
+      margin-top: 22px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    h3.sub-header {
+      font-size: 11pt;
+      font-weight: 700;
+      color: #b84a68;
+      margin-top: 12px;
+      margin-bottom: 6px;
+    }
+
+    /* Tables */
+    table.task-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0 18px;
+      font-size: 9.5pt;
+    }
+    table.task-table th, table.task-table td {
+      border: 1px solid #dbe2e8;
+      padding: 7px 10px;
+      text-align: left;
+    }
+    table.task-table th {
+      background: #0b2e4c;
+      color: #ffffff;
+      font-weight: 700;
+    }
+    table.task-table tr:nth-child(even) {
+      background: #f7f9fb;
+    }
+    .badge-status {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 8.5pt;
+      font-weight: 700;
+      color: #ffffff;
+      background: #2e8b57;
+    }
+
+    /* Screenshots */
+    .screenshot-card {
+      margin-bottom: 16px;
+      border: 1px solid #dbe2e8;
+      border-radius: 6px;
+      overflow: hidden;
+      background: #ffffff;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+    .screenshot-img {
+      width: 100%;
+      display: block;
+      max-height: 400px;
+      object-fit: contain;
+      background: #fdfafa;
+      border-bottom: 1px solid #eee;
+    }
+    .screenshot-caption {
+      padding: 8px 14px;
+      font-size: 9pt;
+      background: #fcfcfc;
+      color: #444;
+      line-height: 1.4;
+    }
+    .screenshot-caption strong {
+      color: #0b2e4c;
+    }
+
+    /* Code Blocks */
+    pre {
+      background: #f6f8fa;
+      border: 1px solid #d0d7de;
+      border-radius: 6px;
+      padding: 10px 12px;
+      font-family: 'Consolas', 'Courier New', monospace;
+      font-size: 7.8pt;
+      line-height: 1.35;
+      color: #24292e;
+      overflow-x: auto;
+      white-space: pre-wrap;
+      word-break: break-all;
+      margin-bottom: 14px;
+    }
+    .code-title {
+      font-size: 9pt;
+      font-weight: 700;
+      color: #0b2e4c;
+      background: #eef3f8;
+      border: 1px solid #d0d7de;
+      border-bottom: none;
+      padding: 4px 10px;
+      border-radius: 6px 6px 0 0;
+      display: inline-block;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- COVER & HEADER -->
+  <div class="cover-card">
+    <table class="header-table">
+      <tr>
+        <td style="width: 100px; text-align: center;">
+          <img src="assets/au_logo.png" class="univ-logo" alt="Air University Logo">
+        </td>
+        <td class="univ-title">
+          <h1>AIR UNIVERSITY ISLAMABAD</h1>
+          <h2>Kamra Campus • Department of Computer Science</h2>
+        </td>
+      </tr>
+    </table>
+
+    <div class="lab-title-banner">
+      <h2>LAB TASK 4: INTERACTIVE PRODUCT CUSTOMIZATION PLATFORM</h2>
+      <p>Course: Full Stack Development (CS-301L) | Semester: BSCS VB | Instructor: M. Fahad Qasim</p>
+    </div>
+
+    <div class="meta-box">
+      <div class="meta-item"><strong>Student Name:</strong> Hamza Tahir</div>
+      <div class="meta-item"><strong>Registration ID:</strong> 225193</div>
+      <div class="meta-item"><strong>Discipline:</strong> BS Computer Science</div>
+      <div class="meta-item"><strong>Submission Date:</strong> October 2026</div>
+      <div class="meta-item"><strong>Technology Stack:</strong> HTML5, CSS3, JavaScript (ES6+), Lottie</div>
+      <div class="meta-item"><strong>Status:</strong> All 15 Tasks Completed & Verified</div>
+    </div>
+  </div>
+
+  <!-- LAB SUMMARY & TASKS TABLE -->
+  <h2 class="section-header">1. Executive Overview & Requirements Matrix</h2>
+  <p style="font-size:10pt; margin-bottom:10px;">
+    This lab assignment implements a modern, high-performance eCommerce product configurator for customized ceramic mugs. 
+    The application features rich interactive mouse interactions, real-time preview manipulation, HTML5 drag-and-drop, 
+    simulated payment and card validation, dynamic state unlocking, Lottie animations, and interactive SVG graphics.
+  </p>
+
+  <table class="task-table">
+    <thead>
+      <tr>
+        <th style="width: 8%;">No.</th>
+        <th style="width: 32%;">Requirement Specification</th>
+        <th style="width: 48%;">Technical Implementation Details</th>
+        <th style="width: 12%;">Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td>Product Information & Copy Protection</td>
+        <td>Name, price, descriptive tags; JavaScript <code>copy</code> and <code>cut</code> event prevention with visual toast alert feedback.</td>
+        <td><span class="badge-status">Completed</span></td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>Product Customization Controls</td>
+        <td>Real-time custom text engraving, 18-character limit counter, size variants (Small, Medium, Large), color glaze filters.</td>
+        <td><span class="badge-status">Completed</span></td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td>Interactive 3D Product Preview</td>
+        <td>CSS 3D perspective transforms with mouse coordinates calculation (<code>rotateX</code>, <code>rotateY</code>) and specular highlight gradient overlay.</td>
+        <td><span class="badge-status">Completed</span></td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td>Product Drag-and-Drop</td>
+        <td>Native HTML5 Drag and Drop API with dragover highlight states, drop sound/visual pulse, cart inventory update, and confirmation banners.</td>
+        <td><span class="badge-status">Completed</span></td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td>Video Advertisement</td>
+        <td>Integrated HTML5 <code>&lt;video&gt;</code> element with playback controls, styled responsive container, and 16:9 aspect ratio.</td>
+        <td><span class="badge-status">Completed</span></td>
+      </tr>
+      <tr>
+        <td>6</td>
+        <td>Animations & Visual Effects</td>
+        <td>Smooth CSS cubic-bezier transitions, pulsing status badges, steam SVG keyframe animations, and card hover elevations.</td>
+        <td><span class="badge-status">Completed</span></td>
+      </tr>
+      <tr>
+        <td>7</td>
+        <td>Lottie Animation</td>
+        <td>Integrated <code>lottie-web</code> vector celebration animation triggered upon successful order placement and checkout.</td>
+        <td><span class="badge-status">Completed</span></td>
+      </tr>
+      <tr>
+        <td>8 & 9</td>
+        <td>Premium Customization & Feature Lock</td>
+        <td>4 exclusive artisan glazes, graphic stamps, and cursive luxury typography styles locked with visual indicators and modal triggers.</td>
+        <td><span class="badge-status">Completed</span></td>
+      </tr>
+      <tr>
+        <td>10 & 11</td>
+        <td>Premium Payment & Dynamic Status</td>
+        <td>Simulated card gateway modal; dynamic DOM update from "Free User" to "Premium User" without page reload upon completion.</td>
+        <td><span class="badge-status">Completed</span></td>
+      </tr>
+      <tr>
+        <td>12</td>
+        <td>Form Validation & Submissions</td>
+        <td>Strict regex validation for cardholder name, 16-digit card number with grouping, expiry MM/YY format, and CVV checks.</td>
+        <td><span class="badge-status">Completed</span></td>
+      </tr>
+      <tr>
+        <td>13</td>
+        <td>Form & Application State Reset</td>
+        <td>"Reset All Customizations" restores all inputs, visual glaze filters, badges, preview states, and cart items to original defaults.</td>
+        <td><span class="badge-status">Completed</span></td>
+      </tr>
+      <tr>
+        <td>14</td>
+        <td>Bonus Interactive SVG Graphics</td>
+        <td>Interactive vector mug and VIP Authenticity Seal that dynamically change fill colors and rotate based on user interaction.</td>
+        <td><span class="badge-status">Completed</span></td>
+      </tr>
+      <tr>
+        <td>15</td>
+        <td>Responsive Layout Across Devices</td>
+        <td>CSS Grid and Flexbox media queries ensuring seamless responsiveness on desktop, tablet, and mobile screens.</td>
+        <td><span class="badge-status">Completed</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- PAGE BREAK -->
+  <div class="page-break"></div>
+
+  <!-- SECTION 2: SCREENSHOTS -->
+  <h2 class="section-header">2. Application Screenshots & Feature Demonstration</h2>
+
+  <div class="screenshot-card">
+    <img src="assets/screenshot_customized.png" class="screenshot-img" alt="Customized State Screenshot">
+    <div class="screenshot-caption">
+      <strong>Figure 1: Real-time Customization & Shopping Cart Drag-and-Drop.</strong>
+      Shows the customized mug engraved with <em>"Hamza Tahir 225193"</em>, character count feedback (18/18), Ruby Crimson ceramic glaze, and the successfully added cart item inside the drop zone with price total (₨ 1,499).
+    </div>
+  </div>
+
+  <div class="screenshot-card">
+    <img src="assets/screenshot_payment.png" class="screenshot-img" alt="Payment Modal Screenshot">
+    <div class="screenshot-caption">
+      <strong>Figure 2: Premium Upgrade Modal & Payment Processing.</strong>
+      Displays the simulated payment modal for VIP upgrade (₨ 499) with validated cardholder name ("Hamza Tahir"), auto-formatted 16-digit card number, MM/YY expiry check, CVV validation, and active simulation spinner.
+    </div>
+  </div>
+
+  <!-- PAGE BREAK -->
+  <div class="page-break"></div>
+
+  <div class="screenshot-card">
+    <img src="assets/screenshot_premium_unlocked.png" class="screenshot-img" alt="Premium Unlocked Screenshot">
+    <div class="screenshot-caption">
+      <strong>Figure 3: Dynamically Unlocked Premium State.</strong>
+      Demonstrates dynamic DOM state transformation: Header status badge updated to <em>"★ Premium User"</em>, lock icon switched to 🔓, unlocked artisan glazes, Royal Crown graphic stamp (👑 • ROYAL PREMIUM MUG •), and luxury cursive script typography.
+    </div>
+  </div>
+
+  <div class="screenshot-card">
+    <img src="assets/screenshot_mobile.png" class="screenshot-img" style="max-height: 340px;" alt="Mobile View Screenshot">
+    <div class="screenshot-caption">
+      <strong>Figure 4: Responsive Mobile Layout (Requirement 15).</strong>
+      Demonstrates complete adaptability on mobile viewport (480px width) with fluid grid columns, stacked customization controls, touch-friendly buttons, and zero horizontal scrolling.
+    </div>
+  </div>
+
+  <!-- PAGE BREAK -->
+  <div class="page-break"></div>
+
+  <!-- SECTION 3: CODE SNIPPETS -->
+  <h2 class="section-header">3. Source Code Architecture</h2>
+
+  <div class="code-title">mug.html — HTML5 Markup Structure</div>
+  <pre>&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+  &lt;title&gt;Custom Ceramic Mug – Interactive Product Configurator | Lab 04&lt;/title&gt;
+  &lt;script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"&gt;&lt;/script&gt;
+  &lt;link rel="stylesheet" href="style.css"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;header&gt;
+    &lt;div class="brand-wrapper"&gt;
+      &lt;div class="logo"&gt;Mug&lt;span&gt;Craft&lt;/span&gt; Studio&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="header-user-status"&gt;
+      &lt;span class="status-badge free" id="statusBadge"&gt;Free User&lt;/span&gt;
+    &lt;/div&gt;
+  &lt;/header&gt;
+
+  &lt;main class="container"&gt;
+    &lt;section class="card hero"&gt;
+      &lt;div class="hero-left"&gt;
+        &lt;span class="eyebrow"&gt;Artisan Collection • Lab 04&lt;/span&gt;
+        &lt;h1&gt;Custom Ceramic Coffee Mug&lt;/h1&gt;
+        &lt;p class="price"&gt;₨ 1,499&lt;/p&gt;
+        &lt;div class="description-box"&gt;
+          &lt;p class="description" id="productDescription"&gt;
+            Crafted from high-density kiln-fired ceramic with an ergonomic comfort handle.
+          &lt;/p&gt;
+        &lt;/div&gt;
+        &lt;div class="cart-section"&gt;
+          &lt;div class="drop-zone" id="dropZone"&gt;
+            &lt;p&gt;&lt;strong&gt;Drag & Drop the customized mug here&lt;/strong&gt; to add to cart&lt;/p&gt;
+            &lt;div id="cartItems"&gt;&lt;/div&gt;
+          &lt;/div&gt;
+          &lt;p class="cart-message" id="cartMessage"&gt;&lt;/p&gt;
+          &lt;button class="btn place-order-btn" id="placeOrderBtn"&gt;Proceed to Checkout&lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+
+      &lt;div class="hero-right"&gt;
+        &lt;div class="product-preview" id="productPreview" draggable="true"&gt;
+          &lt;img src="assets/mug.jpg" alt="Custom Mug" class="mug-img" id="mugImage"&gt;
+          &lt;div class="back-text"&gt;
+            &lt;div id="engravingGraphic"&gt;&lt;/div&gt;
+            &lt;div id="engravingText"&gt;&lt;/div&gt;
+            &lt;div id="engravingSub"&gt;&lt;/div&gt;
+          &lt;/div&gt;
+          &lt;div class="preview-overlay" id="previewOverlay"&gt;&lt;/div&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/section&gt;
+    ...
+  &lt;/main&gt;
+  &lt;script src="script.js"&gt;&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+
+  <div class="code-title">script.js — Interactive Logic & Event Handlers</div>
+  <pre>/* ============================================================================
+   FSD LAB 04 - Core Logic (Hamza Tahir - 225193)
+   ============================================================================ */
+document.addEventListener('DOMContentLoaded', () => {
+  // 1. Copy/Cut Protection
+  ['copy', 'cut'].forEach(ev => {
+    productDescription.addEventListener(ev, (e) => {
+      e.preventDefault();
+      showProtectionNotice(`Product description text cannot be ${ev}ed!`);
+    });
+  });
+
+  // 2. Real-Time Engraving with character feedback
+  engravingInput.addEventListener('input', function () {
+    let cleanVal = this.value.replace(/[^a-zA-Z0-9\s\-_.&!❤️★]/g, '');
+    this.value = cleanVal;
+    engravingTextDisplay.textContent = cleanVal;
+    charCount.textContent = `${cleanVal.length}/18`;
+  });
+
+  // 3. 3D Perspective Tilt on Pointer Move
+  productPreview.addEventListener('mousemove', (e) => {
+    const rect = productPreview.getBoundingClientRect();
+    const x = e.clientX - rect.left, y = e.clientY - rect.top;
+    const tiltX = ((y - rect.height/2) / (rect.height/2)) * -12;
+    const tiltY = ((x - rect.width/2) / (rect.width/2)) * 12;
+    productPreview.style.transform = `perspective(700px) rotateX(${tiltX.toFixed(2)}deg) rotateY(${tiltY.toFixed(2)}deg) scale(1.03)`;
+    previewOverlay.style.background = `radial-gradient(circle at ${(x/rect.width)*100}% ${(y/rect.height)*100}%, rgba(255,255,255,0.35) 0%, transparent 70%)`;
+  });
+
+  // 4. HTML5 Drag & Drop Implementation
+  productPreview.addEventListener('dragstart', (e) => {
+    productPreview.classList.add('dragging');
+    e.dataTransfer.setData('text/plain', 'custom-mug');
+  });
+  dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.classList.add('over'); });
+  dropZone.addEventListener('dragleave', () => dropZone.classList.remove('over'));
+  dropZone.addEventListener('drop', (e) => {
+    e.preventDefault();
+    dropZone.classList.remove('over');
+    addItemToCart();
+  });
+
+  // 10 & 11. Simulated Payment Gateway & Strict Regex Validation
+  paymentForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (!validateCardholderName() || !validateCardNumber() || !validateExpiryDate() || !validateCVV()) return;
+    paymentForm.hidden = true; processingMsg.hidden = false;
+    setTimeout(() => {
+      processingMsg.hidden = true; successMsg.hidden = false;
+      activatePremiumStatus();
+      setTimeout(closePaymentModalWindow, 1600);
+    }, 1500);
+  });
+});</pre>
+
+  <!-- PAGE BREAK -->
+  <div class="page-break"></div>
+
+  <div class="code-title">style.css — Design System Tokens & Responsive Styles</div>
+  <pre>/* ============================================================================
+   FSD LAB 04 - Design Tokens & Visual Hierarchy
+   ============================================================================ */
+:root {
+  --bg-primary: #fcf9f7;
+  --bg-secondary: #ffffff;
+  --text-main: #2b1f21;
+  --text-muted: #7d6b6e;
+  --accent-pink: #e27d97;
+  --accent-dark: #b84a68;
+  --accent-green: #38a169;
+  --card-border: #ebdcd7;
+  --card-shadow: 0 10px 30px rgba(168, 114, 126, 0.08);
+  --border-radius-lg: 16px;
+  --border-radius-md: 10px;
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 32px;
+  align-items: center;
+}
+
+.product-preview {
+  position: relative;
+  text-align: center;
+  cursor: grab;
+  padding: 18px;
+  background: radial-gradient(circle at 50% 30%, #ffffff 0%, #f9eef1 100%);
+  border-radius: var(--border-radius-lg);
+  border: 1px solid #eed2d9;
+  transform-style: preserve-3d;
+  transition: transform 0.15s ease-out, box-shadow 0.25s ease;
+}
+
+.drop-zone {
+  min-height: 100px;
+  border: 2px dashed #dcbdc6;
+  border-radius: var(--border-radius-md);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #fdf5f7;
+  transition: all 0.28s ease;
+}
+.drop-zone.over {
+  border-color: var(--accent-dark);
+  background: #fdf0f4;
+  transform: scale(1.02);
+}
+
+.status-badge.premium {
+  background: linear-gradient(135deg, #c73e68, #e87b98);
+  color: #ffffff;
+  box-shadow: 0 4px 14px rgba(199, 62, 104, 0.35);
+  animation: pulseBadge 2.2s infinite;
+}
+
+@media (max-width: 860px) {
+  .hero, .row-2 { grid-template-columns: 1fr; }
+}</pre>
+
+  <div style="margin-top: 30px; padding: 14px; background: #eef8f2; border-left: 4px solid #2e8b57; border-radius: 4px;">
+    <h3 style="font-size: 11pt; color: #1e5e3a; margin-bottom: 4px;">Project Completion Verification</h3>
+    <p style="font-size: 9.5pt; color: #2e5a42;">
+      All 15 laboratory requirements specified in Lab Number 04 (Air University Kamra Campus) have been comprehensively implemented, 
+      verified, and tested across modern web browsers. Codebase is organized into modular files: 
+      <code>mug.html</code>, <code>style.css</code>, and <code>script.js</code>.
+    </p>
+  </div>
+
+</body>
+</html>

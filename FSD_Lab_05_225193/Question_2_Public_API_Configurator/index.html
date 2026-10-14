@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question 2 - Public Product API Integration (jQuery AJAX GET)</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Top Header -->
+    <header class="app-header">
+        <div class="header-container">
+            <div class="brand">
+                <span class="brand-badge">Lab 05 • Task 2</span>
+                <h1>Public Product API Integration</h1>
+            </div>
+            <div class="student-pill">
+                <span class="student-name">Hamza Tahir</span>
+                <span class="student-id">Reg ID: 225193</span>
+                <span class="campus-tag">Air University</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-container">
+        <!-- Live Request-Response Architecture Banner -->
+        <section class="api-control-bar">
+            <div class="api-info-left">
+                <span class="method-tag get">GET</span>
+                <div class="endpoint-url-box">
+                    <span class="url-label">Endpoint:</span>
+                    <code id="active-url">https://dummyjson.com/products?limit=6</code>
+                </div>
+            </div>
+
+            <div class="api-actions">
+                <select id="api-limit-select" class="select-input">
+                    <option value="4">Limit: 4 Products</option>
+                    <option value="6" selected>Limit: 6 Products</option>
+                    <option value="10">Limit: 10 Products</option>
+                </select>
+
+                <select id="api-category-select" class="select-input">
+                    <option value="all">All Categories</option>
+                    <option value="smartphones">Smartphones</option>
+                    <option value="laptops">Laptops</option>
+                    <option value="fragrances">Fragrances</option>
+                </select>
+
+                <button type="button" id="btn-fetch-api" class="btn btn-primary">
+                    <span id="btn-icon">⚡</span> Fetch Public Products
+                </button>
+
+                <button type="button" id="btn-simulate-error" class="btn btn-danger-outline" title="Test error handling with invalid URL">
+                    Simulate API Error
+                </button>
+            </div>
+        </section>
+
+        <!-- Status & Telemetry Console -->
+        <div id="api-status-banner" class="status-banner idle">
+            <div class="status-indicator"></div>
+            <span id="status-message">Ready. Click "Fetch Public Products" to initiate jQuery AJAX GET request.</span>
+            <span class="status-time" id="status-timestamp"></span>
+        </div>
+
+        <!-- Two Columns Layout: Catalog Feed & Live Configurator -->
+        <div class="two-column-workspace">
+            <!-- Left: Public API Feed -->
+            <section class="panel catalog-feed-panel">
+                <div class="panel-header">
+                    <h2>External Catalog Feed (DummyJSON)</h2>
+                    <span class="counter-badge" id="catalog-count">0 items loaded</span>
+                </div>
+
+                <div class="catalog-grid" id="catalog-products-container">
+                    <div class="catalog-placeholder">
+                        <div class="placeholder-icon">📦</div>
+                        <p>No external products loaded yet.</p>
+                        <small>Click "Fetch Public Products" above to load data from the public REST API.</small>
+                    </div>
+                </div>
+
+                <!-- Observable JSON Inspection Panel -->
+                <div class="json-inspector">
+                    <div class="inspector-header">
+                        <span>Raw JSON Response Inspection</span>
+                        <button type="button" id="btn-toggle-json" class="btn-text">Toggle JSON</button>
+                    </div>
+                    <pre id="json-viewer" class="hidden">Waiting for API response...</pre>
+                </div>
+            </section>
+
+            <!-- Right: Configurator with Imported Public Data -->
+            <section class="panel configurator-target-panel">
+                <div class="panel-header">
+                    <h2>Dynamic Product Configurator</h2>
+                    <span class="source-badge" id="source-badge">Awaiting Product Selection</span>
+                </div>
+
+                <div class="target-product-card" id="target-product-view">
+                    <div class="product-visual-stage">
+                        <img id="configured-img" src="https://dummyjson.com/image/300x200?text=Select+Product" alt="Configured Product">
+                        <div class="overlay-engraving" id="live-engraving-badge"></div>
+                    </div>
+
+                    <div class="product-metadata">
+                        <div class="meta-row">
+                            <span class="prod-category" id="conf-category">CATEGORY</span>
+                            <span class="prod-price" id="conf-price">$0.00</span>
+                        </div>
+                        <h3 id="conf-title">Select a Product From the Left Feed</h3>
+                        <p id="conf-desc" class="desc-text">When you click "Configure This Item" on any fetched product from the public API, its attributes will populate dynamically here.</p>
+                    </div>
+
+                    <!-- Customization Sub-Form -->
+                    <div class="customization-options-box">
+                        <label for="conf-engraving-input" class="sub-label">Add Custom Laser Engraving / Gift Message:</label>
+                        <div class="input-with-action">
+                            <input type="text" id="conf-engraving-input" class="text-input" placeholder="Type custom message..." maxlength="24">
+                            <button type="button" id="btn-apply-custom" class="btn btn-secondary">Apply</button>
+                        </div>
+
+                        <div class="shipping-option">
+                            <label class="checkbox-row">
+                                <input type="checkbox" id="conf-gift-wrap">
+                                <span>Add Luxury Gift Packaging (+$5.00)</span>
+                            </label>
+                        </div>
+
+                        <div class="order-summary-box">
+                            <div class="calc-row">
+                                <span>Base Item Price:</span>
+                                <span id="summary-base-price">$0.00</span>
+                            </div>
+                            <div class="calc-row">
+                                <span>Packaging & Customization:</span>
+                                <span id="summary-addon-price">$0.00</span>
+                            </div>
+                            <div class="calc-row total">
+                                <strong>Final Configured Total:</strong>
+                                <strong id="summary-final-total">$0.00</strong>
+                            </div>
+                        </div>
+
+                        <button type="button" id="btn-confirm-order" class="btn btn-success btn-full" disabled>
+                            Proceed With Configured Item
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- jQuery 3.7.1 CDN -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

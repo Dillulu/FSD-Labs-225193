@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Product Configurator</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<header>
+    <h1>Premium Tech Accessories</h1>
+</header>
+
+<main class="container">
+    <div class="product-configurator">
+        <!-- Product Information -->
+        <section class="product-info">
+            <h2 id="product-name">Custom Smart Mug</h2>
+            <p id="product-price">$89.99</p>
+            <div class="description-container">
+                <p id="product-description">
+                    Experience your beverages at the perfect temperature all day. This smart mug pairs with your device and features premium ceramic coating. 
+                    (Note: This description is protected from copying).
+                </p>
+                <span id="copy-warning" class="hidden">Copying is disabled for this text.</span>
+            </div>
+        </section>
+
+        <!-- Configuration Controls -->
+        <section class="controls">
+            <form id="config-form">
+                <div class="form-group">
+                    <label for="theme-select">Select Color Theme:</label>
+                    <select id="theme-select" name="theme">
+                        <option value="midnight">Midnight Black</option>
+                        <option value="pearl">Pearl White</option>
+                        <option value="ocean">Ocean Blue</option>
+                        <option value="sunset">Sunset Orange</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="engraving-input">Custom Engraving (Max 15 characters):</label>
+                    <input type="text" id="engraving-input" name="engraving" maxlength="15" placeholder="Enter your name...">
+                    <small id="char-count">0/15 characters</small>
+                    <span id="focus-feedback" class="hidden">Typing...</span>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" id="submit-btn">Save Configuration</button>
+                    <button type="button" id="reset-btn">Reset</button>
+                </div>
+            </form>
+            <div id="form-feedback" class="hidden"></div>
+        </section>
+    </div>
+
+    <!-- Product Preview & Cart -->
+    <div class="interaction-area">
+        <!-- Interactive Preview -->
+        <section class="preview-container">
+            <h3>Live Preview</h3>
+            <div id="product-preview" class="product-preview midnight" draggable="true">
+                <div class="mug-body">
+                    <div id="preview-engraving" class="engraving-text"></div>
+                    <div class="mug-reflection"></div>
+                </div>
+                <div class="mug-handle"></div>
+                
+                <!-- Tooltip for hover interaction -->
+                <div id="hover-tooltip" class="hidden">Drag me to cart!</div>
+            </div>
+            <p class="instruction-text">Hover to inspect, drag to cart.</p>
+        </section>
+
+        <!-- Cart / Drop Area -->
+        <section class="cart-section">
+            <h3>Your Cart</h3>
+            <div id="cart-drop-zone" class="drop-zone">
+                <p>Drop Product Here</p>
+            </div>
+            <div id="cart-summary" class="hidden">
+                <h4>Cart Items</h4>
+                <ul id="cart-items"></ul>
+            </div>
+        </section>
+    </div>
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>

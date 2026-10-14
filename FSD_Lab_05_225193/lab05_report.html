@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>FSD Lab 05 - Hamza Tahir (225193)</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; font-size:13px; color:#1e293b; background:#fff; }
+  
+  /* Cover Page */
+  .cover { page-break-after: always; min-height:100vh; display:flex; flex-direction:column; justify-content:center; align-items:center; background:linear-gradient(145deg,#1e1b4b,#312e81,#1d4ed8); color:#fff; text-align:center; padding:60px 40px; }
+  .cover .uni-badge { background:rgba(255,255,255,.15); border:1px solid rgba(255,255,255,.3); padding:8px 22px; border-radius:99px; font-size:14px; font-weight:600; margin-bottom:32px; letter-spacing:.05em; }
+  .cover h1 { font-size:38px; font-weight:800; margin-bottom:14px; letter-spacing:-.01em; line-height:1.15; }
+  .cover .subtitle { font-size:18px; color:rgba(255,255,255,.75); margin-bottom:48px; }
+  .cover .info-table { background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.25); border-radius:16px; padding:28px 40px; display:inline-block; text-align:left; min-width:380px; }
+  .cover .info-row { display:flex; justify-content:space-between; gap:40px; margin-bottom:14px; font-size:14px; }
+  .cover .info-row:last-child { margin-bottom:0; }
+  .cover .info-label { color:rgba(255,255,255,.65); font-weight:500; }
+  .cover .info-val { color:#fff; font-weight:700; }
+  .cover .task-list { margin-top:36px; display:flex; flex-direction:column; gap:10px; }
+  .cover .task-pill { background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.25); border-radius:8px; padding:10px 20px; font-size:13px; display:flex; align-items:center; gap:10px; }
+  .cover .task-pill .tnum { background:#fff; color:#1e1b4b; font-weight:800; padding:2px 8px; border-radius:5px; font-size:12px; }
+  
+  /* Sections */
+  .section { page-break-before: always; padding:48px 52px; }
+  .section-header { background:linear-gradient(90deg,#1e1b4b,#312e81); color:#fff; margin:-48px -52px 36px; padding:32px 52px; }
+  .section-header .task-label { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.12em; color:rgba(255,255,255,.6); margin-bottom:6px; }
+  .section-header h2 { font-size:26px; font-weight:800; }
+  .section-header .desc { font-size:14px; color:rgba(255,255,255,.75); margin-top:6px; }
+  
+  h3 { font-size:16px; font-weight:700; color:#1e293b; margin:28px 0 12px; }
+  h4 { font-size:14px; font-weight:700; color:#334155; margin:20px 0 8px; }
+  p { font-size:13px; color:#475569; line-height:1.65; margin-bottom:12px; }
+  
+  /* Info boxes */
+  .info-box { background:#f8fafc; border:1px solid #e2e8f0; border-left:4px solid #2563eb; border-radius:8px; padding:14px 18px; margin:16px 0; }
+  .info-box.green { border-left-color:#16a34a; }
+  .info-box.amber { border-left-color:#d97706; }
+  .info-box strong { color:#1e293b; display:block; margin-bottom:4px; font-size:13px; }
+  
+  /* Code blocks */
+  pre { background:#0f172a; color:#94a3b8; border-radius:10px; padding:18px 20px; font-family:'Consolas','Courier New',monospace; font-size:11.5px; line-height:1.6; overflow:hidden; margin:12px 0; }
+  .kw { color:#c084fc; }
+  .fn { color:#38bdf8; }
+  .str { color:#86efac; }
+  .cmt { color:#64748b; font-style:italic; }
+  .num { color:#fb923c; }
+  .var { color:#fde68a; }
+  
+  /* Screenshots */
+  .screenshot-container { margin:20px 0; }
+  .screenshot-container img { width:100%; border:1px solid #e2e8f0; border-radius:10px; box-shadow:0 2px 8px rgba(0,0,0,.08); }
+  .screenshot-caption { font-size:11.5px; color:#64748b; text-align:center; margin-top:6px; font-style:italic; }
+  
+  /* Feature grid */
+  .feature-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:16px 0; }
+  .feature-card { background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:14px; }
+  .feature-card .fc-icon { font-size:20px; margin-bottom:6px; }
+  .feature-card .fc-title { font-weight:700; font-size:13px; color:#1e293b; margin-bottom:4px; }
+  .feature-card .fc-desc { font-size:12px; color:#64748b; line-height:1.5; }
+  
+  /* API table */
+  table { width:100%; border-collapse:collapse; margin:16px 0; font-size:12px; }
+  th { background:#f1f5f9; padding:10px 14px; text-align:left; font-weight:700; color:#475569; border-bottom:1px solid #e2e8f0; }
+  td { padding:9px 14px; border-bottom:1px solid #f1f5f9; color:#334155; }
+  tr:hover td { background:#fafafa; }
+  
+  /* Code inline */
+  code { background:#f1f5f9; color:#1e293b; padding:1px 5px; border-radius:4px; font-family:'Consolas',monospace; font-size:11px; }
+  
+  /* Badges */
+  .badge { display:inline-block; padding:2px 8px; border-radius:99px; font-size:11px; font-weight:700; }
+  .badge-blue { background:#dbeafe; color:#1d4ed8; }
+  .badge-green { background:#dcfce7; color:#15803d; }
+  .badge-amber { background:#fef3c7; color:#b45309; }
+  
+  /* Concept box */
+  .concept-box { background:linear-gradient(145deg,#eff6ff,#dbeafe); border:1px solid #bfdbfe; border-radius:10px; padding:18px; margin:16px 0; }
+  .concept-box h4 { color:#1e3a8a; font-size:14px; }
+  .concept-box p { color:#1e40af; font-size:12.5px; }
+  
+  /* Divider */
+  hr { border:none; border-top:1px solid #e2e8f0; margin:24px 0; }
+  
+  /* Footer */
+  .footer { border-top:1px solid #e2e8f0; padding:16px 52px; text-align:center; color:#94a3b8; font-size:11px; }
+</style>
+</head>
+<body>
+
+<!-- ===================== COVER PAGE ===================== -->
+<div class="cover">
+  <div class="uni-badge">Air University Islamabad • Department of Computer Science</div>
+  <h1>FSD Lab 05 Tasks</h1>
+  <div class="subtitle">jQuery, AJAX, Node.js & Express.js Lab Assignment</div>
+  
+  <div class="info-table">
+    <div class="info-row">
+      <span class="info-label">Student Name</span>
+      <span class="info-val">Hamza Tahir</span>
+    </div>
+    <div class="info-row">
+      <span class="info-label">Registration ID</span>
+      <span class="info-val">225193</span>
+    </div>
+    <div class="info-row">
+      <span class="info-label">Course</span>
+      <span class="info-val">Full Stack Development (CS-301L)</span>
+    </div>
+    <div class="info-row">
+      <span class="info-label">Lab Session</span>
+      <span class="info-val">Week 5 — Lab 05</span>
+    </div>
+    <div class="info-row">
+      <span class="info-label">Submission Date</span>
+      <span class="info-val">October 6, 2026</span>
+    </div>
+    <div class="info-row">
+      <span class="info-label">Technology Stack</span>
+      <span class="info-val">HTML, CSS, jQuery 3.7.1, Node.js, Express</span>
+    </div>
+  </div>
+  
+  <div class="task-list">
+    <div class="task-pill"><span class="tnum">Task 1</span> Interactive Product Configurator (jQuery DOM Events &amp; Selectors)</div>
+    <div class="task-pill"><span class="tnum">Task 2</span> Public Product API Integration (jQuery AJAX GET Request)</div>
+    <div class="task-pill"><span class="tnum">Task 3</span> Student Management System (Express REST API + jQuery POST)</div>
+  </div>
+</div>
+
+<!-- ===================== TASK 1 ===================== -->
+<div class="section">
+  <div class="section-header">
+    <div class="task-label">Task 1 / Question 1</div>
+    <h2>Interactive Product Configurator — jQuery DOM Manipulation</h2>
+    <div class="desc">Demonstrates jQuery selectors, event handling, real-time DOM updates, and dynamic class manipulation</div>
+  </div>
+
+  <h3>📋 Task Overview</h3>
+  <p>Build an interactive product configurator using jQuery. The configurator allows users to customize a Smart Thermal Tumbler by selecting a color finish, choosing the size/capacity, adding a laser engraving, and optionally unlocking premium features via a simulated purchase. All interactions are handled entirely through jQuery event handling and real-time DOM manipulation.</p>
+
+  <div class="feature-grid">
+    <div class="feature-card">
+      <div class="fc-icon">🎨</div>
+      <div class="fc-title">Color Theme Selection</div>
+      <div class="fc-desc">jQuery .click() event on color swatches. Uses .data(), .addClass(), .removeClass() to switch themes on the 3D product model.</div>
+    </div>
+    <div class="feature-card">
+      <div class="fc-icon">⚖️</div>
+      <div class="fc-title">Size / Capacity Picker</div>
+      <div class="fc-desc">Radio input change events. Detects selected value with .val(), updates CSS classes, recalculates price dynamically.</div>
+    </div>
+    <div class="feature-card">
+      <div class="fc-icon">✍️</div>
+      <div class="fc-title">Live Laser Engraving</div>
+      <div class="fc-desc">jQuery .on("input") event tracks keystroke by keystroke. Updates the projected engraving text on the preview mug in real time.</div>
+    </div>
+    <div class="feature-card">
+      <div class="fc-icon">⭐</div>
+      <div class="fc-title">Premium Pack Unlock</div>
+      <div class="fc-desc">Simulated transaction with setTimeout. .slideUp()/.slideDown() animations reveal premium controls. .prop("disabled") management throughout.</div>
+    </div>
+    <div class="feature-card">
+      <div class="fc-icon">💾</div>
+      <div class="fc-title">Save Configuration</div>
+      <div class="fc-desc">Form submit handler (.on("submit")). Builds config object and appends a new card to the saved list using .append() with .fadeIn() animation.</div>
+    </div>
+    <div class="feature-card">
+      <div class="fc-icon">🔤</div>
+      <div class="fc-title">Font Style Switcher</div>
+      <div class="fc-desc">Three engraving font styles (Modern, Serif, Mono). Toggled via class names using jQuery .removeClass() + .addClass().</div>
+    </div>
+  </div>
+
+  <h3>📸 Screenshots</h3>
+  <div class="screenshot-container">
+    <img src="Screenshots/q1_initial.png" alt="Task 1 - Interactive Product Configurator Initial View">
+    <div class="screenshot-caption">Figure 1.1 — Task 1: Interactive Product Configurator — Initial State showing the Midnight Slate mug with controls</div>
+  </div>
+
+  <h3>💻 Key jQuery Code — Event Handling &amp; DOM Manipulation</h3>
+
+  <pre><span class="cmt">// jQuery selectors &amp; event handling — Color Finish Selection</span>
+$(<span class="str">".color-swatch"</span>).<span class="fn">on</span>(<span class="str">"click"</span>, <span class="kw">function</span>() {
+    <span class="kw">const</span> <span class="var">$swatch</span> = $(<span class="kw">this</span>);
+    <span class="kw">if</span> (<span class="var">$swatch</span>.<span class="fn">hasClass</span>(<span class="str">"locked"</span>)) {
+        <span class="fn">showAlert</span>(<span class="str">"Gold Finish requires Premium Pack!"</span>, <span class="str">"warning"</span>);
+        <span class="kw">return</span>;
+    }
+    <span class="var">$</span>(<span class="str">".color-swatch"</span>).<span class="fn">removeClass</span>(<span class="str">"active"</span>);   <span class="cmt">// Remove from all</span>
+    <span class="var">$swatch</span>.<span class="fn">addClass</span>(<span class="str">"active"</span>);                <span class="cmt">// Mark selected</span>
+    <span class="kw">const</span> <span class="var">colorKey</span> = <span class="var">$swatch</span>.<span class="fn">data</span>(<span class="str">"color"</span>);    <span class="cmt">// jQuery .data()</span>
+    $(<span class="str">"#product-model"</span>).<span class="fn">removeClass</span>(<span class="str">"theme-midnight theme-pearl theme-ocean theme-emerald"</span>)
+                       .<span class="fn">addClass</span>(<span class="str">"theme-"</span> + <span class="var">colorKey</span>); <span class="cmt">// Dynamic class update</span>
+});</pre>
+
+  <pre><span class="cmt">// Real-time Engraving — input event updates live preview</span>
+$(<span class="str">"#engraving-text"</span>).<span class="fn">on</span>(<span class="str">"input"</span>, <span class="kw">function</span>() {
+    <span class="kw">const</span> <span class="var">text</span>    = $(<span class="kw">this</span>).<span class="fn">val</span>();
+    <span class="kw">const</span> <span class="var">maxLen</span>  = $(<span class="kw">this</span>).<span class="fn">attr</span>(<span class="str">"maxlength"</span>);
+    $(<span class="str">"#engraving-counter"</span>).<span class="fn">text</span>(<span class="var">text</span>.length + <span class="str">" / "</span> + <span class="var">maxLen</span> + <span class="str">" chars"</span>);
+    $(<span class="str">"#engraved-label"</span>).<span class="fn">text</span>(<span class="var">text</span> ? <span class="var">text</span>.<span class="fn">toUpperCase</span>() : <span class="str">"YOUR NAME"</span>);
+});</pre>
+
+  <pre><span class="cmt">// Save Config — Form submit event handler with .append() and .fadeIn()</span>
+$(<span class="str">"#configurator-form"</span>).<span class="fn">on</span>(<span class="str">"submit"</span>, <span class="kw">function</span>(<span class="var">e</span>) {
+    <span class="var">e</span>.<span class="fn">preventDefault</span>();
+    <span class="kw">const</span> <span class="var">newCard</span> = <span class="str">`&lt;div class="saved-item-card"&gt;...&lt;/div&gt;`</span>;
+    $(<span class="var">newCard</span>).<span class="fn">hide</span>().<span class="fn">appendTo</span>(<span class="str">"#saved-list"</span>).<span class="fn">fadeIn</span>(<span class="num">400</span>); <span class="cmt">// Animated append</span>
+    $(<span class="str">"#saved-count"</span>).<span class="fn">text</span>(savedConfigurations.length);
+});</pre>
+
+  <h3>🎯 Concepts Demonstrated (Lab 05 Reference Steps 01–03)</h3>
+  <div class="info-box">
+    <strong>Step 01 — jQuery Introduction &amp; Event Playground</strong>
+    Core jQuery selection with <code>$(selector)</code>, .text() updates, input/keyup/click/mouseenter events, .fadeToggle() and .slideToggle() animations.
+  </div>
+  <div class="info-box">
+    <strong>Step 02 — jQuery Selectors Inspector</strong>
+    ID selector (#id), class selector (.class), element/tag selector (element), .data() attribute reading, .addClass()/.removeClass()/.toggleClass().
+  </div>
+  <div class="info-box">
+    <strong>Step 03 — DOM Manipulation and Events Studio</strong>
+    .val() for reading form inputs, .text()/.html() for dynamic updates, keydown/input/change event binding, form submit prevention with e.preventDefault().
+  </div>
+
+  <hr>
+  <p><strong>Files:</strong> <code>Question_1_jQuery_Configurator/index.html</code> | <code>styles.css</code> | <code>script.js</code></p>
+</div>
+
+<!-- ===================== TASK 2 ===================== -->
+<div class="section">
+  <div class="section-header">
+    <div class="task-label">Task 2 / Question 2</div>
+    <h2>Public Product API Integration — jQuery AJAX GET Request</h2>
+    <div class="desc">Demonstrates asynchronous AJAX requests, JSON response processing, dynamic rendering, and error handling</div>
+  </div>
+
+  <h3>📋 Task Overview</h3>
+  <p>Build a two-panel interface that sends a jQuery <code>$.ajax()</code> GET request to the public DummyJSON REST API (<code>https://dummyjson.com/products</code>). The retrieved product data is dynamically rendered as product cards using <code>$.each()</code> and jQuery DOM manipulation. A product can be selected to populate the integrated configurator on the right panel. The interface also features full error handling, live API endpoint display, and a raw JSON inspector.</p>
+
+  <div class="concept-box">
+    <h4>🔗 How AJAX Works in This Task</h4>
+    <p>When the user clicks "Fetch Public Products", jQuery dispatches an asynchronous HTTP GET request to the DummyJSON API. While waiting, the status bar shows a pulsing "loading" indicator. On success (HTTP 200), <code>$.each()</code> iterates through the products array and appends a card per item. On failure, the error callback displays the HTTP error code and disables the render area.</p>
+  </div>
+
+  <h3>📸 Screenshot</h3>
+  <div class="screenshot-container">
+    <img src="Screenshots/q2_initial.png" alt="Task 2 - Public API Integration">
+    <div class="screenshot-caption">Figure 2.1 — Task 2: Public API Catalog Feed showing AJAX GET request dispatching to DummyJSON API</div>
+  </div>
+
+  <h3>💻 Core AJAX GET Request Code</h3>
+
+  <pre><span class="cmt">// jQuery $.ajax() GET request to public DummyJSON API</span>
+$.<span class="fn">ajax</span>({
+    url: <span class="str">`https://dummyjson.com/products?limit=<span class="var">${limit}</span>`</span>,
+    method: <span class="str">"GET"</span>,
+    dataType: <span class="str">"json"</span>,
+    timeout: <span class="num">10000</span>,
+    <span class="fn">success</span>: <span class="kw">function</span>(<span class="var">response</span>) {
+        <span class="fn">console</span>.<span class="fn">log</span>(<span class="str">"%c[AJAX 200 OK]"</span>, <span class="str">"color:#16a34a;"</span>, <span class="var">response</span>);
+        <span class="var">fetchedProducts</span> = <span class="var">response</span>.products;
+        <span class="fn">renderCatalog</span>(<span class="var">fetchedProducts</span>);   <span class="cmt">// Build product cards</span>
+        <span class="fn">setStatus</span>(<span class="str">"success"</span>, <span class="str">"Loaded "</span> + <span class="var">response</span>.products.length + <span class="str">" products."</span>);
+    },
+    <span class="fn">error</span>: <span class="kw">function</span>(<span class="var">xhr</span>, <span class="var">status</span>, <span class="var">error</span>) {
+        <span class="fn">console</span>.<span class="fn">error</span>(<span class="str">"%c[AJAX Error]"</span>, <span class="str">"color:#dc2626;"</span>, { status: <span class="var">xhr</span>.status, <span class="var">error</span> });
+        <span class="fn">setStatus</span>(<span class="str">"error"</span>, <span class="str">"HTTP "</span> + <span class="var">xhr</span>.status + <span class="str">": "</span> + <span class="var">xhr</span>.statusText);
+    }
+});</pre>
+
+  <pre><span class="cmt">// Dynamic catalog rendering using jQuery $.each()</span>
+<span class="kw">function</span> <span class="fn">renderCatalog</span>(<span class="var">products</span>) {
+    <span class="kw">const</span> <span class="var">$container</span> = $(<span class="str">"#catalog-products-container"</span>).<span class="fn">empty</span>();
+    $.<span class="fn">each</span>(<span class="var">products</span>, <span class="kw">function</span>(<span class="var">index</span>, <span class="var">product</span>) {
+        <span class="var">$container</span>.<span class="fn">append</span>(<span class="str">`
+            &lt;div class="catalog-item-card"&gt;
+                &lt;img src="<span class="var">${product.thumbnail}</span>" alt="<span class="var">${product.title}</span>"&gt;
+                &lt;h4&gt;<span class="var">${product.title}</span>&lt;/h4&gt;
+                &lt;span class="card-price"&gt;$<span class="var">${product.price}</span>&lt;/span&gt;
+                &lt;button class="btn-select-prod" data-id="<span class="var">${product.id}</span>"&gt;Configure &amp;rarr;&lt;/button&gt;
+            &lt;/div&gt;
+        `</span>);
+    });
+}</pre>
+
+  <h3>🎯 Concepts Demonstrated (Lab 05 Reference Steps 04–05)</h3>
+  <div class="info-box">
+    <strong>Step 04 — JSON Basics &amp; Student Directory</strong>
+    Parsing JSON response objects, mapping arrays into DOM elements, $.each() iteration, dynamic card generation.
+  </div>
+  <div class="info-box green">
+    <strong>Step 05 — AJAX with a Public GET API</strong>
+    jQuery $.ajax() method, GET request to DummyJSON, response.products iteration, live search filtering, request state feedback (loading/success/error indicators).
+  </div>
+
+  <h3>API Endpoint Used</h3>
+  <table>
+    <tr><th>Attribute</th><th>Detail</th></tr>
+    <tr><td>Method</td><td><span class="badge badge-green">GET</span></td></tr>
+    <tr><td>Base URL</td><td><code>https://dummyjson.com/products</code></td></tr>
+    <tr><td>Query Params</td><td><code>?limit=N</code> (4, 6, or 10 products)</td></tr>
+    <tr><td>Response Format</td><td>JSON <code>{ products: [...], total, limit, skip }</code></td></tr>
+    <tr><td>Error Handling</td><td>Simulated via <code>/non-existent-api-endpoint-404</code></td></tr>
+  </table>
+
+  <hr>
+  <p><strong>Files:</strong> <code>Question_2_Public_API_Configurator/index.html</code> | <code>styles.css</code> | <code>script.js</code></p>
+</div>
+
+<!-- ===================== TASK 3 ===================== -->
+<div class="section">
+  <div class="section-header">
+    <div class="task-label">Task 3 / Question 3</div>
+    <h2>Student Management System — Express.js REST API + jQuery POST</h2>
+    <div class="desc">Full-stack: Express.js backend with GET &amp; POST endpoints, CORS middleware, jQuery AJAX frontend</div>
+  </div>
+
+  <h3>📋 Task Overview</h3>
+  <p>Build a complete full-stack application. The backend is an Express.js REST API server running on <code>localhost:3005</code>. It exposes two endpoints: <strong>GET /api/students</strong> returns all student records as JSON, and <strong>POST /api/students</strong> receives a new student object, validates required fields, appends it to the in-memory store, and responds with HTTP 201 Created. CORS middleware (<code>cors</code> npm package) is applied so the separate jQuery frontend can communicate cross-origin without browser security errors.</p>
+
+  <h3>📸 Screenshots</h3>
+  <div class="screenshot-container">
+    <img src="Screenshots/q3_frontend.png" alt="Task 3 - Student Management Frontend">
+    <div class="screenshot-caption">Figure 3.1 — Task 3: Student Management System Frontend with Express server online (green dot), GET table panel &amp; POST form panel</div>
+  </div>
+
+  <h3>💻 Express Backend Server Code</h3>
+  <pre><span class="kw">const</span> <span class="var">express</span> = <span class="fn">require</span>(<span class="str">"express"</span>);
+<span class="kw">const</span> <span class="var">cors</span>    = <span class="fn">require</span>(<span class="str">"cors"</span>);
+<span class="kw">const</span> <span class="var">app</span>     = <span class="fn">express</span>();
+
+<span class="cmt">// In-memory student data store</span>
+<span class="kw">let</span> <span class="var">students</span> = [
+    { <span class="var">id</span>: <span class="num">1</span>, <span class="var">name</span>: <span class="str">"Hamza Tahir"</span>, <span class="var">regId</span>: <span class="str">"225193"</span>, <span class="var">city</span>: <span class="str">"Islamabad"</span>, <span class="var">age</span>: <span class="num">20</span>, <span class="var">grade</span>: <span class="str">"A"</span> },
+    { <span class="var">id</span>: <span class="num">2</span>, <span class="var">name</span>: <span class="str">"Ali Hassan"</span>,   <span class="var">regId</span>: <span class="str">"225101"</span>, <span class="var">city</span>: <span class="str">"Lahore"</span>,     <span class="var">age</span>: <span class="num">21</span>, <span class="var">grade</span>: <span class="str">"B"</span> }
+];
+
+<span class="var">app</span>.<span class="fn">use</span>(<span class="fn">cors</span>());           <span class="cmt">// Enable CORS for all origins</span>
+<span class="var">app</span>.<span class="fn">use</span>(<span class="var">express</span>.<span class="fn">json</span>());  <span class="cmt">// Parse JSON request bodies</span>
+
+<span class="cmt">// GET /api/students — Return all records</span>
+<span class="var">app</span>.<span class="fn">get</span>(<span class="str">"/api/students"</span>, <span class="kw">function</span>(<span class="var">req</span>, <span class="var">res</span>) {
+    <span class="var">res</span>.<span class="fn">status</span>(<span class="num">200</span>).<span class="fn">json</span>({ success: <span class="kw">true</span>, count: <span class="var">students</span>.length, students: <span class="var">students</span> });
+});
+
+<span class="cmt">// POST /api/students — Add new student</span>
+<span class="var">app</span>.<span class="fn">post</span>(<span class="str">"/api/students"</span>, <span class="kw">function</span>(<span class="var">req</span>, <span class="var">res</span>) {
+    <span class="kw">const</span> <span class="var">body</span> = <span class="var">req</span>.body;
+    <span class="kw">if</span> (!<span class="var">body</span>.name || !<span class="var">body</span>.city || <span class="var">body</span>.age === <span class="kw">undefined</span>) {
+        <span class="kw">return</span> <span class="var">res</span>.<span class="fn">status</span>(<span class="num">400</span>).<span class="fn">json</span>({ success: <span class="kw">false</span>, message: <span class="str">"name, city and age required"</span> });
+    }
+    <span class="kw">const</span> <span class="var">newId</span> = Math.<span class="fn">max</span>(...<span class="var">students</span>.<span class="fn">map</span>(<span class="var">s</span> => <span class="var">s</span>.id)) + <span class="num">1</span>;
+    <span class="kw">const</span> <span class="var">newStudent</span> = { ...body, id: <span class="var">newId</span>, age: Number(<span class="var">body</span>.age) };
+    <span class="var">students</span>.<span class="fn">push</span>(<span class="var">newStudent</span>);
+    <span class="var">res</span>.<span class="fn">status</span>(<span class="num">201</span>).<span class="fn">json</span>({ success: <span class="kw">true</span>, message: <span class="str">"Student added."</span>, student: <span class="var">newStudent</span> });
+});
+
+<span class="var">app</span>.<span class="fn">listen</span>(<span class="num">3005</span>, () => <span class="fn">console</span>.<span class="fn">log</span>(<span class="str">"Running at http://localhost:3005"</span>));</pre>
+
+  <h3>💻 jQuery Frontend AJAX (GET + POST)</h3>
+  <pre><span class="cmt">// AJAX GET request to Express backend</span>
+$(<span class="str">"#btn-get-students"</span>).<span class="fn">on</span>(<span class="str">"click"</span>, <span class="kw">function</span>() {
+    $.<span class="fn">ajax</span>({
+        url: <span class="str">"http://localhost:3005/api/students"</span>,
+        method: <span class="str">"GET"</span>, dataType: <span class="str">"json"</span>,
+        <span class="fn">success</span>: <span class="kw">function</span>(<span class="var">data</span>) {
+            $.<span class="fn">each</span>(<span class="var">data</span>.students, <span class="kw">function</span>(<span class="var">i</span>, <span class="var">s</span>) {
+                $(<span class="str">"#students-tbody"</span>).<span class="fn">append</span>(<span class="str">`&lt;tr&gt;&lt;td&gt;${s.id}&lt;/td&gt;&lt;td&gt;${s.name}&lt;/td&gt;...&lt;/tr&gt;`</span>);
+            });
+        }
+    });
+});
+
+<span class="cmt">// AJAX POST request — Submit new student form</span>
+$(<span class="str">"#add-student-form"</span>).<span class="fn">on</span>(<span class="str">"submit"</span>, <span class="kw">function</span>(<span class="var">e</span>) {
+    <span class="var">e</span>.<span class="fn">preventDefault</span>();
+    <span class="kw">const</span> <span class="var">payload</span> = { name: $(<span class="str">"#f-name"</span>).<span class="fn">val</span>(), city: $(<span class="str">"#f-city"</span>).<span class="fn">val</span>(), age: $(<span class="str">"#f-age"</span>).<span class="fn">val</span>() };
+    $.<span class="fn">ajax</span>({
+        url: <span class="str">"http://localhost:3005/api/students"</span>,
+        method: <span class="str">"POST"</span>,
+        contentType: <span class="str">"application/json"</span>,
+        data: JSON.<span class="fn">stringify</span>(<span class="var">payload</span>),
+        <span class="fn">success</span>: <span class="kw">function</span>(<span class="var">data</span>) {
+            <span class="fn">console</span>.<span class="fn">log</span>(<span class="str">"201 Created:"</span>, <span class="var">data</span>.student);
+            <span class="cmt">// Append new row to table, show JSON response</span>
+        }
+    });
+});</pre>
+
+  <h3>✅ API Test Results (Live Verification)</h3>
+  <div class="info-box green">
+    <strong>GET /api/students — HTTP 200 OK</strong>
+    Server returned 5 seeded students + 1 dynamically added via POST test. Response: <code>{"success":true,"count":6,"students":[...]}</code>
+  </div>
+  <div class="info-box green">
+    <strong>POST /api/students — HTTP 201 Created</strong>
+    Sent: <code>{"name":"Ahmed Raza","regId":"225200","city":"Peshawar","age":21,"grade":"A"}</code><br>
+    Server responded: <code>{"success":true,"message":"Student record added successfully.","student":{"id":6,...}}</code>
+  </div>
+
+  <h3>API Response JSON (Verified via Node.js)</h3>
+  <pre>{
+  <span class="str">"success"</span>: <span class="kw">true</span>,
+  <span class="str">"count"</span>: <span class="num">6</span>,
+  <span class="str">"students"</span>: [
+    { <span class="str">"id"</span>: <span class="num">1</span>, <span class="str">"name"</span>: <span class="str">"Hamza Tahir"</span>,  <span class="str">"regId"</span>: <span class="str">"225193"</span>, <span class="str">"city"</span>: <span class="str">"Islamabad"</span>, <span class="str">"age"</span>: <span class="num">20</span>, <span class="str">"grade"</span>: <span class="str">"A"</span>  },
+    { <span class="str">"id"</span>: <span class="num">2</span>, <span class="str">"name"</span>: <span class="str">"Ali Hassan"</span>,   <span class="str">"regId"</span>: <span class="str">"225101"</span>, <span class="str">"city"</span>: <span class="str">"Lahore"</span>,    <span class="str">"age"</span>: <span class="num">21</span>, <span class="str">"grade"</span>: <span class="str">"B"</span>  },
+    { <span class="str">"id"</span>: <span class="num">3</span>, <span class="str">"name"</span>: <span class="str">"Sara Ahmed"</span>,   <span class="str">"regId"</span>: <span class="str">"225122"</span>, <span class="str">"city"</span>: <span class="str">"Karachi"</span>,   <span class="str">"age"</span>: <span class="num">22</span>, <span class="str">"grade"</span>: <span class="str">"A+"</span> },
+    { <span class="str">"id"</span>: <span class="num">4</span>, <span class="str">"name"</span>: <span class="str">"Usman Malik"</span>,  <span class="str">"regId"</span>: <span class="str">"225145"</span>, <span class="str">"city"</span>: <span class="str">"Rawalpindi"</span>,<span class="str">"age"</span>: <span class="num">20</span>, <span class="str">"grade"</span>: <span class="str">"B+"</span> },
+    { <span class="str">"id"</span>: <span class="num">5</span>, <span class="str">"name"</span>: <span class="str">"Zainab Raza"</span>,  <span class="str">"regId"</span>: <span class="str">"225167"</span>, <span class="str">"city"</span>: <span class="str">"Multan"</span>,    <span class="str">"age"</span>: <span class="num">21</span>, <span class="str">"grade"</span>: <span class="str">"A"</span>  },
+    { <span class="str">"id"</span>: <span class="num">6</span>, <span class="str">"name"</span>: <span class="str">"Ahmed Raza"</span>,   <span class="str">"regId"</span>: <span class="str">"225200"</span>, <span class="str">"city"</span>: <span class="str">"Peshawar"</span>,  <span class="str">"age"</span>: <span class="num">21</span>, <span class="str">"grade"</span>: <span class="str">"A"</span>  }
+  ]
+}</pre>
+
+  <h3>🎯 Concepts Demonstrated (Lab 05 Reference Steps 07–09)</h3>
+  <div class="info-box">
+    <strong>Step 07 — Express GET API</strong>
+    Setting up Express app, app.get() route handler, res.json() to return data, server startup with app.listen().
+  </div>
+  <div class="info-box">
+    <strong>Step 08 — Express POST API</strong>
+    app.post() route, express.json() middleware, req.body parsing, server-side validation, res.status(201) response.
+  </div>
+  <div class="info-box green">
+    <strong>Step 09 — CORS Student Application</strong>
+    cors npm package, cross-origin AJAX from frontend, jQuery $.ajax POST with contentType: "application/json", JSON.stringify(payload), real-time DOM update on success.
+  </div>
+
+  <h3>📁 Project File Structure</h3>
+  <pre><span class="var">FSD_Lab_05_225193/</span>
+├── <span class="fn">Question_1_jQuery_Configurator/</span>
+│   ├── <span class="str">index.html</span>      <span class="cmt">— HTML with form controls &amp; mug canvas</span>
+│   ├── <span class="str">styles.css</span>      <span class="cmt">— Theming, mug 3D model CSS, responsive layout</span>
+│   └── <span class="str">script.js</span>       <span class="cmt">— jQuery selectors, events, DOM manipulation</span>
+│
+├── <span class="fn">Question_2_Public_API_Configurator/</span>
+│   ├── <span class="str">index.html</span>      <span class="cmt">— API control bar, catalog feed, configurator panel</span>
+│   ├── <span class="str">styles.css</span>      <span class="cmt">— Status banner, card grid, JSON inspector</span>
+│   └── <span class="str">script.js</span>       <span class="cmt">— $.ajax GET, $.each rendering, error handling</span>
+│
+└── <span class="fn">Question_3_Express_Backend/</span>
+    ├── <span class="fn">backend/</span>
+    │   ├── <span class="str">server.js</span>   <span class="cmt">— Express app with GET &amp; POST /api/students</span>
+    │   └── <span class="str">package.json</span><span class="cmt">— express &amp; cors dependencies</span>
+    └── <span class="fn">frontend/</span>
+        ├── <span class="str">index.html</span>  <span class="cmt">— Student table + Add Student form</span>
+        ├── <span class="str">styles.css</span>  <span class="cmt">— Panel layout, table, status indicators</span>
+        └── <span class="str">script.js</span>   <span class="cmt">— $.ajax GET/POST with full error handling</span></pre>
+
+  <hr>
+  <p><strong>How to Run Task 3:</strong> Open a terminal in <code>Question_3_Express_Backend/backend/</code> and run <code>node server.js</code>. Then open <code>frontend/index.html</code> in a browser. The green health dot confirms the server is online.</p>
+</div>
+
+<!-- Footer -->
+<div class="footer">
+  FSD Lab 05 — Hamza Tahir | Reg ID: 225193 | Air University, Islamabad | Full Stack Development (CS-301L)
+</div>
+
+</body>
+</html>
