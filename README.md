@@ -11,7 +11,6 @@ This repository contains my Full Stack Development lab submissions for Labs 3, 4
 | 4 | `FSD_Lab_04_225193` | `mug.html` |
 | 5 | `FSD_Lab_05_225193` | Separate folders for Questions 1, 2 and 3 |
 | 6 | `FSD_Lab_06_225193` | Follow `README.txt` to start the Express/MySQL portfolio |
-
 | 7 | `FSD_Lab_07_225193` | Follow `README.md` to start the University API system |
 
 ## Running the labs
@@ -32,7 +31,12 @@ For Lab 6:
 3. Copy `.env.example` to `.env` and enter your local database settings.
 4. Run `npm start`, then open `http://localhost:3000`.
 
-For Lab 7, follow `FSD_Lab_07_225193/README.md`. Import the database, configure `.env`, run `npm ci` and `npm start`, then open `http://localhost:3000/admin`.
+For Lab 7: 
+1. follow `FSD_Lab_07_225193/README.md`.
+2. Import the database.
+3. configure `.env`.
+4. run `npm ci` and `npm start`.
+5. then open `http://localhost:3000/admin`.
 
 ## Documentation
 
