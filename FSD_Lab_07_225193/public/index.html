@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Academic Records | University API</title><link rel="stylesheet" href="/style.css"></head>
+<body><header><strong>University API Access Management</strong><nav><a href="/">Academic records</a><a href="/settings">Settings</a><a href="/admin">Admin</a></nav></header>
+<main><h1>Academic records</h1><p class="muted">Students see their own records. Teachers can view all students.</p>
+<section><h2>My information and marks</h2><p>Save your assigned API key in <a href="/settings">Settings</a>, then load your records.</p><div class="actions"><button id="me">Load my record</button><button id="all">View all students (teachers)</button></div></section>
+<section><h2>Student record lookup</h2><p class="muted">Teachers can look up any student. Students can look up only their own ID.</p><form id="lookup"><div class="row"><label>Student ID<input id="studentId" type="number" min="1" value="1" required></label><button>Load student</button></div></form></section>
+<div id="message" hidden></div><section id="result" hidden><h2>Results</h2><div id="records"></div></section></main><footer>FSD Lab 07 | Hamza Tahir | 225193</footer><script src="/app.js"></script>
+<script>
+async function show(url, type) {
+  $('result').hidden = true;
+  try {
+    const data = await api(url);
+    if (type === 'all') $('records').innerHTML = table(['ID','Name','Registration','Subject','Marks','Total'], data.map(r => [r.id,r.name,r.registration,r.subject,r.obtained,r.total]));
+    else {
+      const p = data.person || data.student;
+      $('records').innerHTML = table(['Field','Value'], Object.entries(p)) + (data.marks.length ? table(['Subject','Marks','Total'], data.marks.map(m => [m.subject,m.obtained,m.total])) : '<p>Teacher account: use View all students to see marks.</p>');
+    }
+    $('result').hidden = false; message('HTTP 200: records loaded.');
+  } catch (err) { message(err.message, true); }
+}
+$('me').onclick = () => show('/api/me', 'me');
+$('all').onclick = () => show('/api/students', 'all');
+$('lookup').onsubmit = e => { e.preventDefault(); show('/api/students/' + $('studentId').value, 'student'); };
+</script></body></html>

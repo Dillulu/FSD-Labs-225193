@@ -1,0 +1,9 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Settings | University API</title><link rel="stylesheet" href="/style.css"></head>
+<body><header><strong>University API Access Management</strong><nav><a href="/">Academic records</a><a href="/settings">Settings</a><a href="/admin">Admin</a></nav></header>
+<main><h1>API key settings</h1><p class="muted">For students and teachers.</p><section><h2>Save your assigned key</h2><p>Ask the administrator for a key. Your role and identity come from that key.</p><form id="save"><label>API key<input id="memberKey" type="password" required autocomplete="off" placeholder="uni_..."></label><div class="actions"><button>Save key</button><button type="button" class="danger" id="clear">Clear saved key</button></div></form><p class="muted">Saved in this browser using localStorage. Saving a key does not use a request. Each records button sends one request.</p></section><div id="message" hidden></div><p><a href="/">Open academic records</a></p></main><footer>FSD Lab 07 | Hamza Tahir | 225193</footer><script src="/app.js"></script>
+<script>
+$('memberKey').value = localStorage.getItem('universityKey') || '';
+$('save').onsubmit = e => { e.preventDefault(); const key = $('memberKey').value.trim(); if (!key) return message('Enter an API key.', true); localStorage.setItem('universityKey', key); message('Key saved. Open academic records to use it.'); };
+$('clear').onclick = () => { localStorage.removeItem('universityKey'); $('memberKey').value = ''; message('Saved key cleared.'); };
+</script></body></html>

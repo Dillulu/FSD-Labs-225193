@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Admin | University API</title><link rel="stylesheet" href="/style.css"></head>
+<body><header><strong>University API Access Management</strong><nav><a href="/">Academic records</a><a href="/settings">Settings</a><a href="/admin">Admin</a></nav></header>
+<main><h1>Admin panel</h1><p class="muted">Manage students, teachers and API access.</p>
+<section><form id="login"><div class="row"><label>Admin API key<input id="adminKey" type="password" required autocomplete="off" placeholder="Enter the predefined admin key"></label><button>Load dashboard</button></div></form></section>
+<div id="message" hidden></div>
+<div id="dashboard" hidden>
+<section><h2>Students and teachers</h2><div id="people"></div></section>
+<section><h2>Generate an API key</h2><form id="generate"><div class="row"><label>Role<select id="role"><option value="student">Student</option><option value="teacher">Teacher</option></select></label><label>Assigned to<select id="owner"></select></label><label>Lifetime request limit<input id="limit" type="number" min="1" max="1000000" value="10" required></label><button>Generate key</button></div></form><div id="newKey" hidden><p>Copy this key now; the full key is shown only once.</p><code class="key" id="keyValue"></code></div></section>
+<section><div class="row"><h2>API keys and usage</h2><button id="refresh">Refresh usage</button></div><p class="muted">Limits apply over the lifetime of each key. Updating a limit does not reset usage.</p><div id="keys"></div></section>
+</div></main><footer>FSD Lab 07 | Hamza Tahir | 225193</footer><script src="/app.js"></script>
+<script>
+let people;
+function owners() {
+  $('owner').innerHTML = people[$('role').value === 'student' ? 'students' : 'teachers'].map(p => `<option value="${p.id}">${escapeHTML(p.name)}</option>`).join('');
+}
+async function refresh() {
+  const keys = await api('/api/admin/keys', 'GET', null, true);
+  $('keys').innerHTML = keys.length ? '<div class="table-wrap"><table><thead><tr><th>Owner / Role</th><th>Key prefix</th><th>Usage</th><th>Status</th><th>Limit / Actions</th></tr></thead><tbody>' + keys.map(k => `<tr><td>${escapeHTML(k.owner)}<br>${k.role}</td><td>${escapeHTML(k.key_prefix)}...</td><td>${k.used_requests} / ${k.request_limit}</td><td>${k.revoked ? 'Revoked' : k.used_requests >= k.request_limit ? 'Limit reached' : 'Active'}</td><td><input aria-label="Limit for key ${k.id}" id="limit-${k.id}" type="number" min="1" max="1000000" value="${k.request_limit}"><button data-update="${k.id}">Update</button><button class="danger" data-revoke="${k.id}" ${k.revoked ? 'disabled' : ''}>Revoke</button></td></tr>`).join('') + '</tbody></table></div>' : '<p>No API keys yet. Generate one above.</p>';
+}
+$('login').onsubmit = e => { e.preventDefault(); action(async () => {
+  $('dashboard').hidden = true;
+  people = await api('/api/admin/people', 'GET', null, true);
+  $('people').innerHTML = '<h3>Students</h3>' + table(['ID','Name','Registration','Program'], people.students.map(p => [p.id,p.name,p.registration,p.program])) + '<h3>Teachers</h3>' + table(['ID','Name','Department'], people.teachers.map(p => [p.id,p.name,p.department]));
+  owners(); await refresh(); $('dashboard').hidden = false; message('Dashboard loaded.');
+}); };
+$('role').onchange = owners;
+$('generate').onsubmit = e => { e.preventDefault(); action(async () => {
+  const data = await api('/api/admin/keys', 'POST', { role: $('role').value, ownerId: Number($('owner').value), requestLimit: Number($('limit').value) }, true);
+  $('keyValue').textContent = data.apiKey; $('newKey').hidden = false; await refresh(); message('API key generated. Assign it to the selected user.');
+}); };
+$('refresh').onclick = () => action(async () => { await refresh(); message('Usage refreshed.'); });
+$('keys').onclick = e => action(async () => {
+  const id = e.target.dataset.update || e.target.dataset.revoke;
+  if (!id) return;
+  if (e.target.dataset.update) await api('/api/admin/keys/' + id, 'PATCH', { requestLimit: Number($('limit-' + id).value) }, true);
+  else { if (!confirm('Revoke this API key? It will stop working.')) return; await api('/api/admin/keys/' + id, 'DELETE', null, true); }
+  await refresh(); message(e.target.dataset.update ? 'Request limit updated.' : 'Key revoked.');
+});
+</script></body></html>

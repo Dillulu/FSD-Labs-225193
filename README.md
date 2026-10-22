@@ -3,7 +3,7 @@
 **Muhammad Hamza Tahir**  
 **Registration ID: 225193**
 
-This repository contains my Full Stack Development lab submissions for Labs 3, 4, 5 and 6. Each lab keeps its original source files and available documentation.
+This repository contains my Full Stack Development lab submissions for Labs 3, 4, 5, 6 and 7. Each lab keeps its original source files and available documentation.
 
 | Lab | Folder | Starting point |
 | --- | --- | --- |
@@ -11,6 +11,8 @@ This repository contains my Full Stack Development lab submissions for Labs 3, 4
 | 4 | `FSD_Lab_04_225193` | `mug.html` |
 | 5 | `FSD_Lab_05_225193` | Separate folders for Questions 1, 2 and 3 |
 | 6 | `FSD_Lab_06_225193` | Follow `README.txt` to start the Express/MySQL portfolio |
+
+| 7 | `FSD_Lab_07_225193` | Follow `README.md` to start the University API system |
 
 ## Running the labs
 
@@ -30,8 +32,10 @@ For Lab 6:
 3. Copy `.env.example` to `.env` and enter your local database settings.
 4. Run `npm start`, then open `http://localhost:3000`.
 
+For Lab 7, follow `FSD_Lab_07_225193/README.md`. Import the database, configure `.env`, run `npm ci` and `npm start`, then open `http://localhost:3000/admin`.
+
 ## Documentation
 
-Lab 3 includes `submission.doc`. Labs 4 and 5 include PDF reports. Lab 6 includes its PDF, screenshots and demo video in `documentation/`. Additional reports and screenshots remain in their original folders.
+Lab 3 includes `submission.doc`. Labs 4 and 5 include PDF reports. Lab 6 includes its PDF, screenshots and demo video in `documentation/`. Lab 7 documentation and its recorded demo are maintained separately in Google Drive. Additional reports and screenshots remain in their original folders.
 
 Dependency folders and private environment files are excluded from version control. Install dependencies locally when needed. `.env.example` is a configuration template and contains no actual password.
