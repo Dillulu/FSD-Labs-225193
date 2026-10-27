@@ -12,7 +12,6 @@ This repository contains my Full Stack Development lab submissions for Labs 3, 4
 | 5 | `FSD_Lab_05_225193` | Separate folders for Questions 1, 2 and 3 |
 | 6 | `FSD_Lab_06_225193` | Follow `README.txt` to start the Express/MySQL portfolio |
 | 7 | `FSD_Lab_07_225193` | Follow `README.md` to start the University API system |
-
 | 9 | `FSD_Lab_09_225193` | Run `npm ci` and `npm run dev` for the React dashboard |
 
 ## Running the labs
