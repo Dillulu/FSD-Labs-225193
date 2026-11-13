@@ -3,7 +3,7 @@
 **Muhammad Hamza Tahir**  
 **Registration ID: 225193**
 
-This repository contains my Full Stack Development lab submissions for Labs 3, 4, 5, 6, 7, 9 and 10. Each lab keeps its original source files and available documentation.
+This repository contains my Full Stack Development lab submissions for Labs 3, 4, 5, 6, 7, 8, 9 and 10. Each lab keeps its original source files and available documentation.
 
 | Lab | Folder | Starting point |
 | --- | --- | --- |
@@ -12,6 +12,7 @@ This repository contains my Full Stack Development lab submissions for Labs 3, 4
 | 5 | `FSD_Lab_05_225193` | Separate folders for Questions 1, 2 and 3 |
 | 6 | `FSD_Lab_06_225193` | Follow `README.txt` to start the Express/MySQL portfolio |
 | 7 | `FSD_Lab_07_225193` | Follow `README.md` to start the University API system |
+| 8 | `FSD_Lab_08_225193` | Follow `README.md` to start the University Course Management System |
 | 9 | `FSD_Lab_09_225193` | Run `npm ci` and `npm run dev` for the React dashboard |
 | 10 | `FSD_Lab_10_225193` | Run `npm ci` and `npm run dev` for the React developer portfolio |
 
@@ -40,6 +41,14 @@ For Lab 7:
 4. run `npm ci` and `npm start`.
 5. then open `http://localhost:3000/admin`.
 
+For Lab 8:
+
+1. Start MySQL in XAMPP and import `FSD_Lab_08_225193/database.sql`.
+2. Open a terminal in `FSD_Lab_08_225193`.
+3. Copy `.env.example` to `.env` and configure `DB_*` and `JWT_SECRET`.
+4. Run `npm install`, then `npm start`.
+5. Open `http://localhost:3000`.
+
 For Lab 9:
 
 1. Open a terminal in `FSD_Lab_09_225193`.
@@ -54,6 +63,6 @@ For Lab 10:
 
 ## Documentation
 
-Lab 3 includes `submission.doc`. Labs 4 and 5 include PDF reports. Lab 6 includes its PDF, screenshots and demo video in `documentation/`. Lab 7 documentation and its recorded demo are maintained separately in Google Drive. Lab 9 source is included here; its report and screenshots are supplied with the project ZIP in Google Drive. Lab 10 source is included here; its documentation PDF and screenshots are maintained in Google Drive. Additional reports and screenshots remain in their original folders.
+Lab 3 includes `submission.doc`. Labs 4 and 5 include PDF reports. Lab 6 includes its PDF, screenshots and demo video in `documentation/`. Lab 7 documentation and its recorded demo are maintained separately in Google Drive. Lab 8 source is included here; its PDF report and screenshots are maintained in Google Drive. Lab 9 source is included here; its report and screenshots are supplied with the project ZIP in Google Drive. Lab 10 source is included here; its documentation PDF and screenshots are maintained in Google Drive. Additional reports and screenshots remain in their original folders.
 
 Dependency folders and private environment files are excluded from version control. Install dependencies locally when needed. `.env.example` is a configuration template and contains no actual password.

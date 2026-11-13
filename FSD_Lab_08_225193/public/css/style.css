@@ -1,0 +1,311 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #f3f5f8;
+  color: #22304a;
+  font: 15px/1.6 Arial, sans-serif;
+}
+
+header {
+  background: #203e66;
+  color: #ffffff;
+  padding: 18px max(5%, calc((100% - 1100px) / 2));
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand strong {
+  display: block;
+  font-size: 20px;
+}
+
+.brand span {
+  font-size: 13px;
+  color: #cddbf0;
+}
+
+nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 18px;
+}
+
+nav a {
+  color: #e2ebfa;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+nav a:hover,
+nav a.active {
+  text-decoration: underline;
+  color: #ffffff;
+}
+
+main {
+  max-width: 1100px;
+  margin: 28px auto;
+  padding: 0 20px;
+}
+
+h1 {
+  font-size: 26px;
+  margin-bottom: 4px;
+}
+
+h2 {
+  font-size: 19px;
+  margin-top: 0;
+}
+
+p {
+  margin-top: 6px;
+}
+
+.muted {
+  color: #65718a;
+}
+
+.card,
+section {
+  background: #ffffff;
+  border: 1px solid #dce2eb;
+  border-radius: 9px;
+  padding: 22px;
+  margin: 18px 0;
+}
+
+.auth-card {
+  max-width: 480px;
+  margin: 32px auto;
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+}
+
+.row {
+  display: flex;
+  align-items: flex-end;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.field {
+  margin-bottom: 14px;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+input,
+select,
+textarea {
+  display: block;
+  width: 100%;
+  padding: 10px 11px;
+  border: 1px solid #b9c4d4;
+  border-radius: 5px;
+  font: inherit;
+  color: #22304a;
+  background: #ffffff;
+}
+
+input:focus,
+textarea:focus {
+  outline: 2px solid #275b91;
+  border-color: #275b91;
+}
+
+button,
+.btn {
+  display: inline-block;
+  background: #275b91;
+  color: #ffffff;
+  padding: 10px 18px;
+  border: 0;
+  border-radius: 5px;
+  cursor: pointer;
+  font: inherit;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+button:hover,
+.btn:hover {
+  background: #1a436e;
+}
+
+button.secondary {
+  background: #4d5e7a;
+}
+
+button.secondary:hover {
+  background: #38465d;
+}
+
+button.danger {
+  background: #a33d43;
+}
+
+button.danger:hover {
+  background: #842d32;
+}
+
+button.small {
+  padding: 6px 11px;
+  font-size: 13px;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+  background: #e7effa;
+  color: #203e66;
+}
+
+.badge.admin {
+  background: #fdebd3;
+  color: #8a4b08;
+}
+
+.profile-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.profile-item {
+  background: #f7f9fc;
+  border: 1px solid #e1e6ed;
+  border-radius: 6px;
+  padding: 12px 14px;
+}
+
+.profile-item span {
+  display: block;
+  font-size: 12px;
+  color: #65718a;
+  text-transform: uppercase;
+}
+
+.profile-item strong {
+  font-size: 15px;
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-top: 12px;
+  text-align: left;
+}
+
+th,
+td {
+  border-bottom: 1px solid #e1e6ed;
+  padding: 10px 12px;
+  vertical-align: top;
+}
+
+th {
+  background: #f1f4f8;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+td.actions-cell {
+  white-space: nowrap;
+}
+
+td.actions-cell button {
+  margin-right: 6px;
+}
+
+.notice {
+  padding: 12px 15px;
+  background: #e7effa;
+  border-left: 4px solid #275b91;
+  border-radius: 4px;
+  margin: 14px 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.notice.error {
+  background: #fcecec;
+  border-color: #ad3838;
+  color: #8b2424;
+}
+
+.notice.success {
+  background: #e7f4ed;
+  border-color: #36835c;
+  color: #1f5c3d;
+}
+
+.demo-box {
+  background: #f7f9fc;
+  border: 1px dashed #b9c4d4;
+  border-radius: 6px;
+  padding: 12px 14px;
+  margin-top: 16px;
+  font-size: 13px;
+}
+
+footer {
+  max-width: 1100px;
+  margin: 25px auto;
+  padding: 0 20px;
+  color: #65718a;
+  font-size: 13px;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+@media (max-width: 640px) {
+  section,
+  .card {
+    padding: 16px;
+  }
+  h1 {
+    font-size: 22px;
+  }
+}

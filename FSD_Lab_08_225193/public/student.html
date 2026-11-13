@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Student Dashboard | University Course Management System</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <strong>University Course Management System</strong>
+      <span>Air University Kamra Campus | Student Portal</span>
+    </div>
+    <nav>
+      <a href="/student" class="active">Student Dashboard</a>
+      <a href="/admin">Admin Dashboard</a>
+      <button type="button" class="small danger" id="logoutBtn">Logout</button>
+    </nav>
+  </header>
+
+  <main>
+    <div id="message" hidden></div>
+
+    <div id="protectedContent" hidden>
+      <section>
+        <div class="between">
+          <div>
+            <h1>Student Dashboard</h1>
+            <p class="muted">Authenticated student profile and available university courses.</p>
+          </div>
+          <span class="badge" id="roleBadge">student</span>
+        </div>
+
+        <div class="profile-grid">
+          <div class="profile-item">
+            <span>Full Name</span>
+            <strong id="studentName">-</strong>
+          </div>
+          <div class="profile-item">
+            <span>Email Address</span>
+            <strong id="studentEmail">-</strong>
+          </div>
+          <div class="profile-item">
+            <span>Assigned Role</span>
+            <strong id="studentRole">-</strong>
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <div class="between">
+          <div>
+            <h2>Available Courses</h2>
+            <p class="muted">Read-only course catalog retrieved from MySQL using your JWT token.</p>
+          </div>
+          <div class="actions" style="margin-top:0;">
+            <button type="button" class="small secondary" id="refreshCoursesBtn">Refresh Courses</button>
+            <button type="button" class="small danger" id="testForbiddenBtn">Test Admin Action (Verify 403)</button>
+          </div>
+        </div>
+
+        <div id="coursesContainer"></div>
+      </section>
+    </div>
+
+    <section id="unauthCard" hidden>
+      <h2>Authentication Required</h2>
+      <p class="muted">You must be logged in with a valid JWT token to view the Student Dashboard.</p>
+      <a class="btn" href="/login">Go to Login</a>
+    </section>
+  </main>
+
+  <footer>FSD Lab 08 | Muhammad Hamza Tahir | Registration ID: 225193</footer>
+
+  <script src="/js/jquery.min.js"></script>
+  <script src="/js/app.js"></script>
+  <script>
+    function renderCoursesTable(courses) {
+      if (!courses || courses.length === 0) {
+        return '<p class="muted">No courses are currently available.</p>';
+      }
+      let html = '<div class="table-wrap"><table><thead><tr>' +
+        '<th>Code</th><th>Course Title</th><th>Instructor</th><th>Credits</th><th>Semester</th><th>Description</th>' +
+        '</tr></thead><tbody>';
+      courses.forEach(function (c) {
+        html += '<tr>' +
+          '<td><strong>' + escapeHTML(c.courseCode) + '</strong></td>' +
+          '<td>' + escapeHTML(c.title) + '</td>' +
+          '<td>' + escapeHTML(c.instructor) + '</td>' +
+          '<td>' + escapeHTML(c.credits) + '</td>' +
+          '<td>' + escapeHTML(c.semester) + '</td>' +
+          '<td>' + escapeHTML(c.description) + '</td>' +
+          '</tr>';
+      });
+      html += '</tbody></table></div>';
+      return html;
+    }
+
+    function loadCourses() {
+      cmsApi('/api/courses', 'GET')
+        .done(function (res) {
+          $('#coursesContainer').html(renderCoursesTable(res.courses));
+        })
+        .fail(function (xhr) {
+          showNotice(extractAjaxError(xhr, 'Failed to load courses.'), true);
+        });
+    }
+
+    $(function () {
+      $('#logoutBtn').on('click', logoutUser);
+
+      if (!getAuthToken()) {
+        showNotice('HTTP 401: Authentication token is missing. Please log in.', true);
+        $('#unauthCard').removeAttr('hidden');
+        return;
+      }
+
+      cmsApi('/api/auth/me', 'GET')
+        .done(function (res) {
+          const user = res.user;
+          $('#studentName').text(user.fullName);
+          $('#studentEmail').text(user.email);
+          $('#studentRole').text(user.role);
+          $('#roleBadge').text(user.role).toggleClass('admin', user.role === 'admin');
+          $('#protectedContent').removeAttr('hidden');
+          loadCourses();
+        })
+        .fail(function (xhr) {
+          showNotice(extractAjaxError(xhr, 'Session verification failed.'), true);
+          $('#unauthCard').removeAttr('hidden');
+        });
+
+      $('#refreshCoursesBtn').on('click', function () {
+        hideNotice();
+        loadCourses();
+      });
+
+      $('#testForbiddenBtn').on('click', function () {
+        cmsApi('/api/courses', 'POST', {
+          courseCode: 'CS-999',
+          title: 'Unauthorized Test Course',
+          instructor: 'Test',
+          credits: 3,
+          semester: 'Spring 2026',
+          description: 'Testing RBAC protection.'
+        })
+          .done(function () {
+            showNotice('Unexpected: request succeeded.', false);
+          })
+          .fail(function (xhr) {
+            showNotice(extractAjaxError(xhr, 'Forbidden'), true);
+          });
+      });
+    });
+  </script>
+</body>
+</html>
