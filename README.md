@@ -3,7 +3,7 @@
 **Muhammad Hamza Tahir**  
 **Registration ID: 225193**
 
-This repository contains my Full Stack Development lab submissions for Labs 3, 4, 5, 6, 7, 8, 9 and 10. Each lab keeps its original source files and available documentation.
+This repository contains my Full Stack Development lab submissions for Labs 3, 4, 5, 6, 7, 8, 9, 10 and 11. Each lab keeps its original source files and available documentation.
 
 | Lab | Folder | Starting point |
 | --- | --- | --- |
@@ -15,6 +15,7 @@ This repository contains my Full Stack Development lab submissions for Labs 3, 4
 | 8 | `FSD_Lab_08_225193` | Follow `README.md` to start the University Course Management System |
 | 9 | `FSD_Lab_09_225193` | Run `npm ci` and `npm run dev` for the React dashboard |
 | 10 | `FSD_Lab_10_225193` | Run `npm ci` and `npm run dev` for the React developer portfolio |
+| 11 | `FSD_Lab_11_225193` | Run `npm ci` and `npm run dev` for the CampusHub student dashboard |
 
 ## Running the labs
 
@@ -61,8 +62,14 @@ For Lab 10:
 2. Run `npm ci`, then `npm run dev`.
 3. Open the local URL printed by Vite, usually `http://localhost:5173`.
 
+For Lab 11:
+
+1. Open a terminal in `FSD_Lab_11_225193`.
+2. Run `npm ci`, then `npm run dev`.
+3. Open the local URL printed by Vite, usually `http://localhost:5173`.
+
 ## Documentation
 
-Lab 3 includes `submission.doc`. Labs 4 and 5 include PDF reports. Lab 6 includes its PDF, screenshots and demo video in `documentation/`. Lab 7 documentation and its recorded demo are maintained separately in Google Drive. Lab 8 source is included here; its PDF report and screenshots are maintained in Google Drive. Lab 9 source is included here; its report and screenshots are supplied with the project ZIP in Google Drive. Lab 10 source is included here; its documentation PDF and screenshots are maintained in Google Drive. Additional reports and screenshots remain in their original folders.
+Lab 3 includes `submission.doc`. Labs 4 and 5 include PDF reports. Lab 6 includes its PDF, screenshots and demo video in `documentation/`. Lab 7 documentation and its recorded demo are maintained separately in Google Drive. Lab 8 source is included here; its PDF report and screenshots are maintained in Google Drive. Lab 9 source is included here; its report and screenshots are supplied with the project ZIP in Google Drive. Lab 10 source is included here; its documentation PDF and screenshots are maintained in Google Drive. Lab 11 source is included here; its documentation PDF and screenshots are maintained in Google Drive. Additional reports and screenshots remain in their original folders.
 
 Dependency folders and private environment files are excluded from version control. Install dependencies locally when needed. `.env.example` is a configuration template and contains no actual password.
